@@ -18,10 +18,12 @@
 15.	Возможность управления ресторанами для администраторов ресторанов.
 
 User-case diagram:
-![image](https://github.com/user-attachments/assets/b0114cbf-c238-49f5-a61c-6d1620ce3cc6)
+
+![image](https://github.com/user-attachments/assets/9bd9b3aa-c783-4058-8dcd-7640ae574c61)
 
 Физическая схема БД:
 
-![image](https://github.com/user-attachments/assets/948b63d9-ae48-4d87-964d-033cb5684048)
+![image](https://github.com/user-attachments/assets/05593d41-167b-4e2f-bf1d-7e4464393bac)
+
 
 
