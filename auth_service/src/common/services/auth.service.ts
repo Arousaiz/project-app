@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { payloadDto } from 'src/interfaces/payload.interface';
+import { payloadDto } from 'src/common/interfaces/payload.interface';
 
 @Injectable()
 export class AuthService {
