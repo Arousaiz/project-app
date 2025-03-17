@@ -21,6 +21,7 @@ User-case diagram:
 ![image](https://github.com/user-attachments/assets/b0114cbf-c238-49f5-a61c-6d1620ce3cc6)
 
 Физическая схема БД:
+
 ![image](https://github.com/user-attachments/assets/948b63d9-ae48-4d87-964d-033cb5684048)
 
 
