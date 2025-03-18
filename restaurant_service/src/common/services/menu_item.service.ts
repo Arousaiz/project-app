@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateMenuItemDto } from 'src/common/interfaces/create_menu_item.interface';
-import { UpdateMenuItemDto } from 'src/common/interfaces/update_menu_item.interface';
+import { CreateMenuItemInterface } from 'src/common/interfaces/create_menu_item.interface';
+import { UpdateMenuItemInterface } from 'src/common/interfaces/update_menu_item.interface';
 import { MenuItem } from 'src/entity/menu_item.entity';
-import { DeleteResult, Like, Repository } from 'typeorm';
+import { DeleteResult, Like, Repository, In } from 'typeorm';
 
 @Injectable()
 export class MenuItemService {
@@ -14,6 +14,10 @@ export class MenuItemService {
 
   async findAllMenuItems(): Promise<MenuItem[]> {
     return this.menuItemsRepository.find();
+  }
+
+  async findMenuItemsByIds(ids: number[]): Promise<MenuItem[]> {
+    return this.menuItemsRepository.find({ where: { id: In(ids) } });
   }
 
   async findMenuItemById(id: number): Promise<MenuItem | null> {
@@ -55,7 +59,7 @@ export class MenuItemService {
 
   async createMenuItem(
     restaurantId: number,
-    menuItem: CreateMenuItemDto,
+    menuItem: CreateMenuItemInterface,
   ): Promise<MenuItem> {
     if (!menuItem)
       throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
@@ -77,7 +81,7 @@ export class MenuItemService {
 
   async updateMenuItem(
     id: number,
-    menuItem: UpdateMenuItemDto,
+    menuItem: UpdateMenuItemInterface,
   ): Promise<MenuItem> {
     const data = await this.menuItemsRepository.findOneBy({ id });
     if (!data) {
