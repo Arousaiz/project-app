@@ -5,7 +5,7 @@ import { Address } from './entity/address.entity';
 import { Category } from './entity/category.entity';
 import { MenuItem } from './entity/menu_item.entity';
 import { ConfigModule } from '@nestjs/config';
-import { DatabaseConfigService } from './config/databaseConfigService';
+import { DatabaseConfigService } from './config/database_config_service';
 import { MenuItemService } from './common/services/menu_item.service';
 import { RestaurantService } from './common/services/restaurant.service';
 import { RestaurantController } from './common/controllers/restaurant.controller';

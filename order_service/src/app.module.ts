@@ -6,7 +6,7 @@ import { OrderItemService } from './common/services/order_item.service';
 import { AddressService } from './common/services/address.service';
 import { OrderController } from './common/controllers/order.controller';
 import { ConfigModule } from '@nestjs/config';
-import { DatabaseConfigService } from './config/databaseConfigService';
+import { DatabaseConfigService } from './config/database_config_service';
 
 @Module({
   imports: [
