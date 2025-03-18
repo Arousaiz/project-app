@@ -7,14 +7,8 @@ import {
 } from 'typeorm';
 import { Address } from './address.entity';
 import { Order } from './order.entity';
+import { DeliveryStatus } from 'src/common/enum/delivery_status';
 
-export enum DeliveryStatus {
-  ORDERED = 'ordered',
-  IN_TRANSIT = 'in transit',
-  DELIVERED = 'delivered',
-  CANCELLED = 'cancelled',
-  RETURNED = 'returned',
-}
 
 @Entity('delivery_details')
 export class DeliveryDetails {

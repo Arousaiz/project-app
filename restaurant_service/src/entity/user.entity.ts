@@ -7,12 +7,7 @@ import {
 } from 'typeorm';
 import { Review } from './review.entity';
 import { Address } from './address.entity';
-
-export enum UserRole {
-  USER = 'user',
-  ADMIN = 'admin',
-  RESTAURANT_ADMIN = 'restaurant_admin',
-}
+import { UserRole } from 'src/common/enum/user_role';
 
 @Entity('user')
 export class User {

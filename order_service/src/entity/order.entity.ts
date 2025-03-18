@@ -9,20 +9,8 @@ import {
 import { DeliveryDetails } from './delivery_details.entity';
 import { OrderItem } from './order_item.entity';
 import { Restaurant } from './restaurant.entity';
-
-export enum OrderStatus {
-  PLACED = 'placed',
-  ACCEPTED = 'accepted',
-  CANCELLED = 'cancelled',
-  COMPLETED = 'completed',
-  RETURNED = 'returned',
-}
-
-export enum PaymentMethod {
-  CASH = 'cash',
-  CARD = 'card',
-  ONLINE = 'online',
-}
+import { OrderStatus } from 'src/common/enum/order_status';
+import { PaymentMethod } from 'src/common/enum/payment_method';
 
 @Entity('Order')
 export class Order {
@@ -59,3 +47,5 @@ export class Order {
   @ManyToOne(() => Restaurant, (restaurant) => restaurant.orders)
   restaurant: Restaurant;
 }
+export { OrderStatus, PaymentMethod };
+
