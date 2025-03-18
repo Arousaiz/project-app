@@ -12,18 +12,18 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { Order } from 'src/common/dto/order';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { CreateOrderDto } from 'src/common/dto/order/create_order.dto';
 import { UpdateOrderDto } from 'src/common/dto/order/update_order.dto';
 import { firstValueFrom } from 'rxjs';
-import { AppService } from 'src/common/services/app.service';
+import { MenuItem } from '../dto/entity_objects/menu_item';
+import { Order } from '../dto/entity_objects/order';
 
 @Controller()
 export class OrderController {
   constructor(
-    private readonly appService: AppService,
     @Inject('ORDER_SERVICE') private orderServiceClient: ClientProxy,
+    @Inject('RESTAURANT_SERVICE') private restaurantServiceClient: ClientProxy,
     @Inject('USER_SERVICE') private userServiceClient: ClientProxy,
     @Inject('AUTH_SERVICE') private authServiceClient: ClientProxy,
   ) {}
@@ -120,6 +120,13 @@ export class OrderController {
   @Post('orders')
   async createOrder(@Body() newOrder: CreateOrderDto) {
     try {
+      const menuItemIds: number[] = newOrder.orderItems.map((item) => item.menuItemId);
+      const menuItems: MenuItem[] = await firstValueFrom(
+        this.restaurantServiceClient.send('findMenuItemsByIds', menuItemIds),
+      )
+      const prices: Map<number, number> = new Map<number, number>();
+      menuItems.forEach(item => prices.set(item.id, item.price));
+      newOrder.orderItems.forEach(item => item.price = prices.get(item.menuItemId)!);
       const order: Order = await firstValueFrom(
         this.orderServiceClient.send('createOrder', newOrder),
       );

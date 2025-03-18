@@ -1,5 +1,5 @@
-export interface CreateOrderItemDto {
+export interface CreateOrderItemInterface {
   menuItemId: number;
-  price: number;
   count: number;
+  price: number;
 }

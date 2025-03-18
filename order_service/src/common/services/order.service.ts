@@ -2,9 +2,10 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Order, OrderStatus } from '../../entity/order.entity';
-import { CreateOrderDto } from 'src/common/interfaces/create_order.interface';
-import { UpdateOrderDto } from 'src/common/interfaces/update_order.interface';
+import { CreateOrderInterface } from 'src/common/interfaces/create_order.interface';
+import { UpdateOrderInterface } from 'src/common/interfaces/update_order.interface';
 import { DeliveryDetailsService } from './delivery_details.service';
+import { MenuItem } from 'src/entity/menu_item.entity';
 
 @Injectable()
 export class OrderService {
@@ -32,12 +33,24 @@ export class OrderService {
     });
   }
 
-  async createOrder(order: CreateOrderDto): Promise<Order> {
+  async createOrder(order: CreateOrderInterface): Promise<Order> {
+    // TODO: How to handle discounts?
+    const orderItems = order.orderItems.map((item) => {
+      return {
+        menuItemId: item.menuItemId,
+        count: item.count,
+        price: item.price,
+      };
+    })
+    let price = 0;
+    orderItems.forEach(async (item) => {
+      price = price + item.price * item.count
+    });
     const data = this.ordersRepository.create({
       userId: order.userId,
       restaurant: { id: order.restaurantId },
-      discount: order.discount,
-      price: order.price,
+      discount: 0,
+      price: price,
       paymentMethod: order.paymentMethod,
       orderTime: Date.now(),
       orderStatus: order.orderStatus,
@@ -46,21 +59,13 @@ export class OrderService {
         deliveryTime: Date.now(),
         address: order.deliveryDetails.address,
       },
-      orderItems: [
-        ...order.orderItems.map((item) => {
-          return {
-            menuItemId: item.menuItemId,
-            count: item.count,
-            price: item.price,
-          };
-        }),
-      ],
+      orderItems: orderItems,
     });
 
     return this.ordersRepository.save(data);
   }
 
-  async updateOrder(id: number, data: UpdateOrderDto): Promise<Order> {
+  async updateOrder(id: number, data: UpdateOrderInterface): Promise<Order> {
     const order = await this.findOrderById(id);
     if (!order)
       throw new HttpException('Order not found', HttpStatus.NOT_FOUND);
