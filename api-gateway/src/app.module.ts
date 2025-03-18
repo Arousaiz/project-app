@@ -4,59 +4,42 @@ import { AuthController } from './common/controllers/auth.controller';
 import { OrderController } from './common/controllers/order.controller';
 import { RestaurantController } from './common/controllers/restaurant.controller';
 import { UserController } from './common/controllers/user.controller';
+import { ConfigModule } from '@nestjs/config';
+import { ClientsModuleConfigService } from './config/clients_module_config_service';
 
 @Module({
   imports: [
-    ClientsModule.register([
+    ConfigModule.forRoot({ isGlobal: true }),
+    ClientsModule.registerAsync([
       {
         name: 'AUTH_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: ['amqp://localhost:5672'],
-          queue: 'auth_queue',
-          queueOptions: {
-            durable: false,
-          },
-        },
+        useFactory: (configService: ClientsModuleConfigService) =>
+          configService.createClientOptionsByName('AUTH'),
+        inject: [ClientsModuleConfigService],
       },
     ]),
-    ClientsModule.register([
+    ClientsModule.registerAsync([
       {
         name: 'USER_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: ['amqp://localhost:5672'],
-          queue: 'user_queue',
-          queueOptions: {
-            durable: false,
-          },
-        },
+        useFactory: (configService: ClientsModuleConfigService) =>
+          configService.createClientOptionsByName('USER'),
+        inject: [ClientsModuleConfigService],
       },
     ]),
-    ClientsModule.register([
+    ClientsModule.registerAsync([
       {
         name: 'RESTAURANT_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: ['amqp://localhost:5672'],
-          queue: 'restaurant_queue',
-          queueOptions: {
-            durable: false,
-          },
-        },
+        useFactory: (configService: ClientsModuleConfigService) =>
+          configService.createClientOptionsByName('RESTAURANT'),
+        inject: [ClientsModuleConfigService],
       },
     ]),
-    ClientsModule.register([
+    ClientsModule.registerAsync([
       {
         name: 'ORDER_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: ['amqp://localhost:5672'],
-          queue: 'order_queue',
-          queueOptions: {
-            durable: false,
-          },
-        },
+        useFactory: (configService: ClientsModuleConfigService) =>
+          configService.createClientOptionsByName('ORDER'),
+        inject: [ClientsModuleConfigService],
       },
     ]),
   ],
