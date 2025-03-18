@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateRestaurantDto } from 'src/common/interfaces/create_restaurant.interface';
-import { UpdateRestaurantDto } from 'src/common/interfaces/update_restaurant.interface';
+import { CreateRestaurantInterface } from 'src/common/interfaces/create_restaurant.interface';
+import { UpdateRestaurantInterface } from 'src/common/interfaces/update_restaurant.interface';
 import { Restaurant } from 'src/entity/restaurant.entity';
 import { DeleteResult, Like, MoreThan, Repository } from 'typeorm';
 
@@ -41,7 +41,7 @@ export class RestaurantService {
     return this.restaurantsRepository.findOneBy({ name: name });
   }
 
-  async createRestaurant(restaurant: CreateRestaurantDto): Promise<Restaurant> {
+  async createRestaurant(restaurant: CreateRestaurantInterface): Promise<Restaurant> {
     if (!restaurant)
       throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
     if (await this.findRestaurantByName(restaurant.name)) {
@@ -62,7 +62,7 @@ export class RestaurantService {
 
   async updateRestaurant(
     id: number,
-    restaurant: UpdateRestaurantDto,
+    restaurant: UpdateRestaurantInterface,
   ): Promise<Restaurant> {
     const data = await this.restaurantsRepository.findOneBy({ id });
     if (!data) {

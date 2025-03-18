@@ -1,4 +1,4 @@
-export interface CreateMenuItemDto {
+export interface CreateMenuItemInterface {
   restaurantId: number;
   categoryId: number;
   name: string;
