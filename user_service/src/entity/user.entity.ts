@@ -1,4 +1,4 @@
-import { UserRole } from 'src/common/enum/UserRoles';
+import { UserRole } from 'src/common/enum/user_roles';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 // TODO: add favorites
