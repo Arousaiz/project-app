@@ -3,7 +3,7 @@ import { AuthController } from './common/controllers/auth.controller';
 import { AuthService } from './common/services/auth.service';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
-import { AuthConfigService } from './config/authConfigService';
+import { JwtConfigService } from './config/jwt_config_service';
 
 @Module({
   imports: [
@@ -11,8 +11,8 @@ import { AuthConfigService } from './config/authConfigService';
       isGlobal: true,
     }),
     JwtModule.registerAsync({
-      useClass: AuthConfigService,
-      inject: [AuthConfigService],
+      useClass: JwtConfigService,
+      inject: [JwtConfigService],
     }),
   ],
   controllers: [AuthController],
