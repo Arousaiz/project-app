@@ -1,8 +1,9 @@
-import { OrderStatus, PaymentMethod } from 'src/entity/order.entity';
-import { UpdateDeliveryDetailsDto } from './update_delivery_details.interface';
+import { OrderStatus } from '../enum/order_status';
+import { PaymentMethod } from '../enum/payment_method';
+import { UpdateDeliveryDetailsInterface } from './update_delivery_details.interface';
 
-export interface UpdateOrderDto {
+export interface UpdateOrderInterface {
   paymentMethod: PaymentMethod;
   orderStatus: OrderStatus;
-  deliveryDetails: UpdateDeliveryDetailsDto;
+  deliveryDetails: UpdateDeliveryDetailsInterface;
 }

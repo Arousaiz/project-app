@@ -1,8 +1,8 @@
 import { Controller } from '@nestjs/common';
 import { OrderService } from 'src/common/services/order.service';
 import { MessagePattern } from '@nestjs/microservices';
-import { CreateOrderDto } from 'src/common/interfaces/create_order.interface';
-import { UpdateOrderDto } from 'src/common/interfaces/update_order.interface';
+import { CreateOrderInterface } from 'src/common/interfaces/create_order.interface';
+import { UpdateOrderInterface } from 'src/common/interfaces/update_order.interface';
 
 @Controller()
 export class OrderController {
@@ -29,12 +29,12 @@ export class OrderController {
   }
 
   @MessagePattern('createOrder')
-  async createOrder(order: CreateOrderDto) {
+  async createOrder(order: CreateOrderInterface) {
     return await this.orderService.createOrder(order);
   }
 
   @MessagePattern('updateOrder')
-  async updateOrder(id: number, data: UpdateOrderDto) {
+  async updateOrder(id: number, data: UpdateOrderInterface) {
     return await this.orderService.updateOrder(id, data);
   }
 

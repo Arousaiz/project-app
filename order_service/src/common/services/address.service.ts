@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Address } from 'src/entity/address.entity';
 import { Repository } from 'typeorm';
-import { CreateAddressDto } from '../interfaces/create_address.interface';
+import { CreateAddressInterface } from '../interfaces/create_address.interface';
 
 @Injectable()
 export class AddressService {
@@ -11,7 +11,7 @@ export class AddressService {
     private addressRepository: Repository<Address>,
   ) {}
 
-  async createAddress(data: CreateAddressDto) {
+  async createAddress(data: CreateAddressInterface) {
     const address = this.addressRepository.create({
       city: data.city,
       street: data.street,

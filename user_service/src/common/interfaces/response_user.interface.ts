@@ -1,4 +1,4 @@
-export interface ResponseUserDto {
+export interface ResponseUserInterface {
   id: number;
   firstName: string;
   lastName: string;

@@ -1,8 +1,8 @@
-import { DeliveryStatus } from 'src/entity/delivery_details.entity';
-import { CreateAddressDto } from './create_address.interface';
+import { DeliveryStatus } from '../enum/delivery_status';
+import { CreateAddressInterface } from './create_address.interface';
 
-export interface CreateDeliveryDetailsDto {
-  address: CreateAddressDto;
+export interface CreateDeliveryDetailsInterface {
+  address: CreateAddressInterface;
   deliveryStatus: DeliveryStatus;
   deliveryTime: number;
 }

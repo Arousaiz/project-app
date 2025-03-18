@@ -1,11 +1,11 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { User } from 'src/entity/user.entity';
-import { CreateUserDto } from '../interfaces/create_user.interface';
-import { LoginUserDto } from '../interfaces/login_user.interface';
-import { ResponseUserDto } from '../interfaces/response_user.interface';
-import { UpdateUserDto } from '../interfaces/update_user.interface';
-import { UpdateUserCredentialsDto } from '../interfaces/update_user_credentials.interface';
+import { CreateUserInterface } from '../interfaces/create_user.interface';
+import { LoginUserInterface } from '../interfaces/login_user.interface';
+import { ResponseUserInterface } from '../interfaces/response_user.interface';
+import { UpdateUserInterface } from '../interfaces/update_user.interface';
+import { UpdateUserCredentialsInterface } from '../interfaces/update_user_credentials.interface';
 import { UserService } from '../services/user.service';
 
 @Controller()
@@ -13,19 +13,19 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @MessagePattern('createUser')
-  async createUser(user: CreateUserDto): Promise<ResponseUserDto> {
+  async createUser(user: CreateUserInterface): Promise<ResponseUserInterface> {
     return await this.userService.createUser(user);
   }
 
   @MessagePattern('searchUserByCredentials')
   async searchUserByCredentials(
-    user: LoginUserDto,
-  ): Promise<ResponseUserDto | null> {
+    user: LoginUserInterface,
+  ): Promise<ResponseUserInterface | null> {
     return await this.userService.searchUserByCredentials(user);
   }
 
   @MessagePattern('findAllUsers')
-  async findAllUsers(): Promise<ResponseUserDto[]> {
+  async findAllUsers(): Promise<ResponseUserInterface[]> {
     return await this.userService.findAllUsers();
   }
 
@@ -35,7 +35,7 @@ export class UserController {
   }
 
   @MessagePattern('getUserProfile')
-  async getUserProfile(id: number): Promise<ResponseUserDto> {
+  async getUserProfile(id: number): Promise<ResponseUserInterface> {
     return await this.userService.getUserProfile(id);
   }
 
@@ -50,14 +50,14 @@ export class UserController {
   }
 
   @MessagePattern('updateUser')
-  async updateUser(id: number, user: UpdateUserDto): Promise<any> {
+  async updateUser(id: number, user: UpdateUserInterface): Promise<any> {
     return await this.userService.updateUser(id, user);
   }
 
   @MessagePattern('updateUserByCredentials')
   async updateUserByUsernameAndPassword(
     id: number,
-    user: UpdateUserCredentialsDto,
+    user: UpdateUserCredentialsInterface,
   ): Promise<any> {
     return await this.userService.updateUserByUsernameAndPassword(id, user);
   }

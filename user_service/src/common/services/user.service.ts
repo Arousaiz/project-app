@@ -2,12 +2,12 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
 import { DeleteResult, Repository } from 'typeorm';
-import { LoginUserDto } from '../interfaces/login_user.interface';
-import { ResponseUserDto } from '../interfaces/response_user.interface';
-import { UpdateUserDto } from '../interfaces/update_user.interface';
-import { UpdateUserCredentialsDto } from '../interfaces/update_user_credentials.interface';
+import { LoginUserInterface } from '../interfaces/login_user.interface';
+import { ResponseUserInterface } from '../interfaces/response_user.interface';
+import { UpdateUserInterface } from '../interfaces/update_user.interface';
+import { UpdateUserCredentialsInterface } from '../interfaces/update_user_credentials.interface';
 import { hashPassword, comparePassword } from '../util/hash';
-import { CreateUserDto } from '../interfaces/create_user.interface';
+import { CreateUserInterface } from '../interfaces/create_user.interface';
 
 @Injectable()
 export class UserService {
@@ -19,7 +19,7 @@ export class UserService {
   async createUser({
     username,
     password,
-  }: CreateUserDto): Promise<ResponseUserDto> {
+  }: CreateUserInterface): Promise<ResponseUserInterface> {
     if (await this.findUserByUsername(username)) {
       throw new HttpException(
         'Username already exists',
@@ -44,7 +44,7 @@ export class UserService {
   async searchUserByCredentials({
     username,
     password,
-  }: LoginUserDto): Promise<ResponseUserDto | null> {
+  }: LoginUserInterface): Promise<ResponseUserInterface | null> {
     const user = await this.findUserByUsername(username);
     if (user) {
       if (await comparePassword(password, user.hashedPassword)) {
@@ -54,9 +54,9 @@ export class UserService {
     return null;
   }
 
-  async findAllUsers(): Promise<ResponseUserDto[]> {
+  async findAllUsers(): Promise<ResponseUserInterface[]> {
     const users: User[] = await this.usersRepository.find();
-    const data: ResponseUserDto[] = users.map((user) =>
+    const data: ResponseUserInterface[] = users.map((user) =>
       this.buildResponseUser(user),
     );
     return data;
@@ -70,7 +70,7 @@ export class UserService {
     return this.usersRepository.findOneBy({ id: id });
   }
 
-  async getUserProfile(id: number): Promise<ResponseUserDto> {
+  async getUserProfile(id: number): Promise<ResponseUserInterface> {
     const user = await this.findUserById(id);
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
@@ -82,7 +82,7 @@ export class UserService {
     return this.usersRepository.delete(id);
   }
 
-  async updateUser(id: number, user: UpdateUserDto): Promise<ResponseUserDto> {
+  async updateUser(id: number, user: UpdateUserInterface): Promise<ResponseUserInterface> {
     const data = await this.usersRepository.findOneBy({ id });
     if (!data) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
@@ -101,8 +101,8 @@ export class UserService {
 
   async updateUserByUsernameAndPassword(
     id: number,
-    user: UpdateUserCredentialsDto,
-  ): Promise<ResponseUserDto> {
+    user: UpdateUserCredentialsInterface,
+  ): Promise<ResponseUserInterface> {
     const data = await this.usersRepository.findOneBy({ id });
     if (!data) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
@@ -121,7 +121,7 @@ export class UserService {
     return this.buildResponseUser(updatedUser);
   }
 
-  buildResponseUser(user: User): ResponseUserDto {
+  buildResponseUser(user: User): ResponseUserInterface {
     return {
       id: user.id,
       firstName: user.firstName,

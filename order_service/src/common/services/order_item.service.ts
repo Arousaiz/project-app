@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateOrderItemDto } from 'src/common/interfaces/create_order_item.interface';
+import { CreateOrderItemInterface } from 'src/common/interfaces/create_order_item.interface';
 import { OrderItem } from 'src/entity/order_item.entity';
 import { Repository } from 'typeorm';
 
@@ -13,7 +13,7 @@ export class OrderItemService {
 
   async createOrderItem(
     orderId: number,
-    orderItem: CreateOrderItemDto,
+    orderItem: CreateOrderItemInterface,
   ): Promise<OrderItem> {
     const item = this.orderItemsRepository.create({
       order: { id: orderId },

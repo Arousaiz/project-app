@@ -1,4 +1,4 @@
-export interface CreateAddressDto {
+export interface CreateAddressInterface {
   id?: number;
   city: string;
   street: string;

@@ -1,4 +1,4 @@
-export interface UpdateUserCredentialsDto {
+export interface UpdateUserCredentialsInterface {
   username: string;
   password: string;
 }

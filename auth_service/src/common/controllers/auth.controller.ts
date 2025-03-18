@@ -1,14 +1,14 @@
 import { Controller } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { MessagePattern } from '@nestjs/microservices';
-import { payloadDto } from 'src/common/interfaces/payload.interface';
+import { payloadInterface } from 'src/common/interfaces/payload.interface';
 
 @Controller()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @MessagePattern('createToken')
-  async createToken(data: payloadDto) {
+  async createToken(data: payloadInterface) {
     const token = await this.authService.createToken(
       data.userId,
       data.username,
@@ -17,12 +17,12 @@ export class AuthController {
   }
 
   @MessagePattern('verifyToken')
-  verifyToken(token: string) {
-    return this.authService.verifyToken(token);
+  async verifyToken(token: string) {
+    return await this.authService.verifyToken(token);
   }
 
   @MessagePattern('decodeToken')
-  decodeToken(token: string) {
-    return this.authService.decodeToken(token);
+  async decodeToken(token: string) {
+    return await this.authService.decodeToken(token);
   }
 }
