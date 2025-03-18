@@ -1,4 +1,5 @@
-import { MenuItem } from './menuItem';
+import { Address } from './address';
+import { MenuItem } from './menu_item';
 
 export class Restaurant {
   id: number;
@@ -11,9 +12,3 @@ export class Restaurant {
   menuItems: MenuItem[];
 }
 
-export class Address {
-  id: number;
-  city: string;
-  street: string;
-  house: string;
-}

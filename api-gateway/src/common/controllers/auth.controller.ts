@@ -12,8 +12,8 @@ import {
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
-import { User } from 'src/common/dto/user';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { User } from 'src/common/dto/entity_objects/user';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { CreateUserDto } from 'src/common/dto/user/create_user.dto';
 import { LoginUserDto } from 'src/common/dto/user/login_user.dto';
 

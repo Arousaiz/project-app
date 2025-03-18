@@ -12,19 +12,17 @@ import {
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { MenuItem } from 'src/common/dto/menuItem';
-import { Restaurant } from 'src/common/dto/restaurant';
+import { MenuItem } from 'src/common/dto/entity_objects/menu_item';
+import { Restaurant } from 'src/common/dto/entity_objects/restaurant';
 import { CreateMenuItemDto } from 'src/common/dto/restaurant/create_menu_item.dto';
 import { CreateRestaurantDto } from 'src/common/dto/restaurant/create_restaurant.dto';
 import { UpdateMenuItemDto } from 'src/common/dto/restaurant/update_menu_item.dto';
 import { UpdateRestaurantDto } from 'src/common/dto/restaurant/update_restaurant.dto';
 import { firstValueFrom } from 'rxjs';
-import { AppService } from 'src/common/services/app.service';
 
 @Controller()
 export class RestaurantController {
   constructor(
-    private readonly appService: AppService,
     @Inject('RESTAURANT_SERVICE') private restaurantServiceClient: ClientProxy,
     @Inject('USER_SERVICE') private userServiceClient: ClientProxy,
     @Inject('AUTH_SERVICE') private authServiceClient: ClientProxy,

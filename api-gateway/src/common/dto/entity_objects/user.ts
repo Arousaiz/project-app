@@ -5,5 +5,4 @@ export class User {
   email: string;
   username: string;
   contactNumber: string;
-  hashedPassword: string;
 }

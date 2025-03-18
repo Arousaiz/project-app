@@ -12,18 +12,16 @@ import {
   Request,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { ResponseUserDto } from 'src/common/dto/user/response_user.dto';
-import { User } from 'src/common/dto/user';
+import { User } from 'src/common/dto/entity_objects/user';
 import { UpdateUserDto } from 'src/common/dto/user/update_user.dto';
 import { UpdateUserCredentialsDto } from 'src/common/dto/user/update_user_credentials.dto';
 import { firstValueFrom } from 'rxjs';
-import { AppService } from 'src/common/services/app.service';
 
 @Controller()
 export class UserController {
   constructor(
-    private readonly appService: AppService,
     @Inject('USER_SERVICE') private userServiceClient: ClientProxy,
     @Inject('AUTH_SERVICE') private authServiceClient: ClientProxy,
   ) {}
