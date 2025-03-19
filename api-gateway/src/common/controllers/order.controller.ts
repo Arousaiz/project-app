@@ -16,7 +16,6 @@ import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { CreateOrderDto } from 'src/common/dto/order/create_order.dto';
 import { UpdateOrderDto } from 'src/common/dto/order/update_order.dto';
 import { firstValueFrom } from 'rxjs';
-import { MenuItem } from '../dto/entity_objects/menu_item';
 import { Order } from '../dto/entity_objects/order';
 
 @Controller()
@@ -120,13 +119,15 @@ export class OrderController {
   @Post('orders')
   async createOrder(@Body() newOrder: CreateOrderDto) {
     try {
-      const menuItemIds: number[] = newOrder.orderItems.map((item) => item.menuItemId);
-      const menuItems: MenuItem[] = await firstValueFrom(
-        this.restaurantServiceClient.send('findMenuItemsByIds', menuItemIds),
-      )
-      const prices: Map<number, number> = new Map<number, number>();
-      menuItems.forEach(item => prices.set(item.id, item.price));
-      newOrder.orderItems.forEach(item => item.price = prices.get(item.menuItemId)!);
+      const menuItemIds: number[] = newOrder.orderItems.map(
+        (item) => item.menuItemId,
+      );
+      const orderItemsPrices: Map<number, number> = await firstValueFrom(
+        this.orderServiceClient.send('getMenuItemPrices', menuItemIds),
+      );
+      newOrder.orderItems.forEach(
+        (item) => (item.price = orderItemsPrices.get(item.menuItemId)!),
+      );
       const order: Order = await firstValueFrom(
         this.orderServiceClient.send('createOrder', newOrder),
       );
