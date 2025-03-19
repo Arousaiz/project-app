@@ -1,6 +1,11 @@
-import { DeliveryStatus } from 'src/entity/delivery_details.entity';
+import { IsEnum, IsInt, IsOptional } from "class-validator";
+import { DeliveryStatus } from "src/common/enum/delivery_status";
 
-export interface UpdateDeliveryDetailsDto {
-  deliveryStatus: DeliveryStatus;
-  deliveryTime: number;
+export class UpdateDeliveryDetailsDto {
+  @IsOptional()
+  @IsEnum(DeliveryStatus)
+  deliveryStatus?: DeliveryStatus;
+  @IsOptional()
+  @IsInt()
+  deliveryTime?: number;
 }

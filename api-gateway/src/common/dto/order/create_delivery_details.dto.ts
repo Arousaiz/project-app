@@ -1,8 +1,10 @@
-import { DeliveryStatus } from 'src/entity/delivery_details.entity';
+import { DeliveryStatus } from 'src/common/enum/delivery_status';
 import { CreateAddressDto } from './create_address.dto';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
-export interface CreateDeliveryDetailsDto {
+export class CreateDeliveryDetailsDto {
   address: CreateAddressDto;
-  deliveryStatus: DeliveryStatus;
+  @IsNumber()
+  @IsNotEmpty()
   deliveryTime: number;
 }

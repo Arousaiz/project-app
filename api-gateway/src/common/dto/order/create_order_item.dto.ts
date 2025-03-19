@@ -1,5 +1,11 @@
-export interface CreateOrderItemDto {
+import { IsInt, IsNotEmpty, IsNumber, IsOptional } from "class-validator";
+
+export class CreateOrderItemDto {
+  @IsInt()
   menuItemId: number;
-  price: number;
+  @IsOptional()
+  @IsNumber()
+  price?: number;
+  @IsNumber()
   count: number;
 }

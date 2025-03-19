@@ -1,6 +1,16 @@
-export interface UpdateMenuItemDto {
-  name: string;
-  description: string;
-  price: number;
-  categoryId: number;
+import { IsNumber, IsOptional, IsString } from "class-validator";
+
+export class UpdateMenuItemDto {
+  @IsOptional()
+  @IsString()
+  name?: string;
+  @IsOptional()
+  @IsString()
+  description?: string;
+  @IsOptional()
+  @IsNumber()
+  price?: number;
+  @IsOptional()
+  @IsNumber()
+  categoryId?: number;
 }

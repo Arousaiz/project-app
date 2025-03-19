@@ -17,6 +17,7 @@ import { User } from 'src/common/dto/entity_objects/user';
 import { UpdateUserDto } from 'src/common/dto/user/update_user.dto';
 import { UpdateUserCredentialsDto } from 'src/common/dto/user/update_user_credentials.dto';
 import { firstValueFrom } from 'rxjs';
+import { FindOneParams } from 'src/common/dto/find_one_params';
 
 @Controller()
 export class UserController {
@@ -49,10 +50,10 @@ export class UserController {
 
   // @UseGuards(AuthGuard) roles
   @Get('/users/:id')
-  async getUser(@Param('id') id: number) {
+  async getUser(@Param() params: FindOneParams) {
     try {
       const user: User = await firstValueFrom(
-        this.userServiceClient.send('getUserProfile', id),
+        this.userServiceClient.send('getUserProfile', params.id),
       );
       if (!user) {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);

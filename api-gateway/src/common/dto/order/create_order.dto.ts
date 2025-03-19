@@ -1,14 +1,15 @@
-import { PaymentMethod } from 'src/common/enum/payment_method';
 import { CreateDeliveryDetailsDto } from './create_delivery_details.dto';
 import { CreateOrderItemDto } from './create_order_item.dto';
-import { OrderStatus } from 'src/common/enum/order_status';
+import { ArrayNotEmpty, IsEnum, IsInt, IsNumber } from 'class-validator';
 
-export interface CreateOrderDto {
+export class CreateOrderDto {
+  @IsInt()
   userId: number;
+  @IsInt()
   restaurantId: number;
-  paymentMethod: PaymentMethod;
+  @IsInt()
   orderTime: number;
-  orderStatus: OrderStatus;
+  @ArrayNotEmpty()
   orderItems: CreateOrderItemDto[];
   deliveryDetails: CreateDeliveryDetailsDto;
 }
