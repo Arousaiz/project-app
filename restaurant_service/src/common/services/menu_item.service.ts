@@ -20,6 +20,13 @@ export class MenuItemService {
     return this.menuItemsRepository.find({ where: { id: In(ids) } });
   }
 
+  async getMenuItemPricesByIds(ids: number[]): Promise<Map<number, number>> {
+    const menuItems = await this.findMenuItemsByIds(ids);
+    const prices: Map<number, number> = new Map<number, number>();
+    menuItems.forEach((item) => prices.set(item.id, item.price));
+    return prices;
+  }
+
   async findMenuItemById(id: number): Promise<MenuItem | null> {
     return this.menuItemsRepository.findOneBy({ id: id });
   }

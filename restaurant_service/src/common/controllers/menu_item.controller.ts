@@ -25,6 +25,11 @@ export class MenuItemController {
     return await this.menuItemService.findMenuItemsByIds(ids);
   }
 
+  @MessagePattern('getMenuItemPricesByIds')
+  async getMenuItemPricesByIds(ids: number[]): Promise<Map<number, number>> {
+    return await this.menuItemService.getMenuItemPricesByIds(ids);
+  }
+
   @MessagePattern('searchMenuItemsByName')
   async searchMenuItemsByName(name: string, id: number): Promise<MenuItem[]> {
     return await this.menuItemService.searchMenuItemsByName(name, id);
