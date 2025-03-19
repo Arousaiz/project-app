@@ -1,4 +1,4 @@
 export interface payloadDto {
-  userId: string;
+  userId: number;
   username: string;
 }
