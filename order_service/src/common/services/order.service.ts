@@ -5,7 +5,7 @@ import { Order, OrderStatus } from '../../entity/order.entity';
 import { CreateOrderInterface } from 'src/common/interfaces/create_order.interface';
 import { UpdateOrderInterface } from 'src/common/interfaces/update_order.interface';
 import { DeliveryDetailsService } from './delivery_details.service';
-import { MenuItem } from 'src/entity/menu_item.entity';
+import { DeliveryStatus } from '../enum/delivery_status';
 
 @Injectable()
 export class OrderService {
@@ -41,10 +41,10 @@ export class OrderService {
         count: item.count,
         price: item.price,
       };
-    })
+    });
     let price = 0;
-    orderItems.forEach(async (item) => {
-      price = price + item.price * item.count
+    orderItems.forEach((item) => {
+      price = price + item.price * item.count;
     });
     const data = this.ordersRepository.create({
       userId: order.userId,
@@ -53,10 +53,10 @@ export class OrderService {
       price: price,
       paymentMethod: order.paymentMethod,
       orderTime: Date.now(),
-      orderStatus: order.orderStatus,
+      orderStatus: OrderStatus.PLACED,
       deliveryDetails: {
-        deliveryStatus: order.deliveryDetails.deliveryStatus,
-        deliveryTime: Date.now(),
+        deliveryStatus: DeliveryStatus.ORDERED,
+        deliveryTime: order.deliveryDetails.deliveryTime,
         address: order.deliveryDetails.address,
       },
       orderItems: orderItems,
