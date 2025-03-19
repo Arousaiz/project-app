@@ -41,7 +41,9 @@ export class RestaurantService {
     return this.restaurantsRepository.findOneBy({ name: name });
   }
 
-  async createRestaurant(restaurant: CreateRestaurantInterface): Promise<Restaurant> {
+  async createRestaurant(
+    restaurant: CreateRestaurantInterface,
+  ): Promise<Restaurant> {
     if (!restaurant)
       throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
     if (await this.findRestaurantByName(restaurant.name)) {

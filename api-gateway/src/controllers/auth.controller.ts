@@ -12,7 +12,7 @@ import { firstValueFrom } from 'rxjs';
 import { User } from 'src/common/dto/entity_objects/user';
 import { CreateUserDto } from 'src/common/dto/user/create_user.dto';
 import { LoginUserDto } from 'src/common/dto/user/login_user.dto';
-import { payloadDto } from '../dto/user/payload.dto';
+import { payloadDto } from '../common/dto/user/payload.dto';
 
 @Controller()
 export class AuthController {

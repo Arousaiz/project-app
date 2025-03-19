@@ -2,12 +2,12 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
 import { DeleteResult, Repository } from 'typeorm';
-import { LoginUserInterface } from '../interfaces/login_user.interface';
-import { ResponseUserInterface } from '../interfaces/response_user.interface';
-import { UpdateUserInterface } from '../interfaces/update_user.interface';
-import { UpdateUserCredentialsInterface } from '../interfaces/update_user_credentials.interface';
-import { hashPassword, comparePassword } from '../util/hash';
-import { CreateUserInterface } from '../interfaces/create_user.interface';
+import { LoginUserInterface } from '../common/interfaces/login_user.interface';
+import { ResponseUserInterface } from '../common/interfaces/response_user.interface';
+import { UpdateUserInterface } from '../common/interfaces/update_user.interface';
+import { UpdateUserCredentialsInterface } from '../common/interfaces/update_user_credentials.interface';
+import { hashPassword, comparePassword } from '../common/util/hash';
+import { CreateUserInterface } from '../common/interfaces/create_user.interface';
 
 @Injectable()
 export class UserService {
@@ -82,7 +82,10 @@ export class UserService {
     return this.usersRepository.delete(id);
   }
 
-  async updateUser(id: number, user: UpdateUserInterface): Promise<ResponseUserInterface> {
+  async updateUser(
+    id: number,
+    user: UpdateUserInterface,
+  ): Promise<ResponseUserInterface> {
     const data = await this.usersRepository.findOneBy({ id });
     if (!data) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);

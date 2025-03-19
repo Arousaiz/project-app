@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Address } from 'src/entity/address.entity';
 import { Repository } from 'typeorm';
-import { CreateAddressInterface } from '../interfaces/create_address.interface';
+import { CreateAddressInterface } from '../common/interfaces/create_address.interface';
 
 @Injectable()
 export class AddressService {

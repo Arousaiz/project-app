@@ -16,7 +16,7 @@ import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { CreateOrderDto } from 'src/common/dto/order/create_order.dto';
 import { UpdateOrderDto } from 'src/common/dto/order/update_order.dto';
 import { firstValueFrom } from 'rxjs';
-import { Order } from '../dto/entity_objects/order';
+import { Order } from '../common/dto/entity_objects/order';
 
 @Controller()
 export class OrderController {

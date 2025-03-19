@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { CreateRestaurantInterface } from 'src/common/interfaces/create_restaurant.interface';
 import { UpdateRestaurantInterface } from 'src/common/interfaces/update_restaurant.interface';
-import { RestaurantService } from 'src/common/services/restaurant.service';
+import { RestaurantService } from 'src/services/restaurant.service';
 
 import { Restaurant } from 'src/entity/restaurant.entity';
 

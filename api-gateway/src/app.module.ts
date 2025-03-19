@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { AuthController } from './common/controllers/auth.controller';
-import { OrderController } from './common/controllers/order.controller';
-import { RestaurantController } from './common/controllers/restaurant.controller';
-import { UserController } from './common/controllers/user.controller';
+import { ClientsModule } from '@nestjs/microservices';
+import { AuthController } from './controllers/auth.controller';
+import { OrderController } from './controllers/order.controller';
+import { RestaurantController } from './controllers/restaurant.controller';
+import { UserController } from './controllers/user.controller';
 import { ConfigModule } from '@nestjs/config';
 import { ClientsModuleConfigService } from './config/clients_module_config_service';
 

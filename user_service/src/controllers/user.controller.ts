@@ -1,12 +1,12 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { User } from 'src/entity/user.entity';
-import { CreateUserInterface } from '../interfaces/create_user.interface';
-import { LoginUserInterface } from '../interfaces/login_user.interface';
-import { ResponseUserInterface } from '../interfaces/response_user.interface';
-import { UpdateUserInterface } from '../interfaces/update_user.interface';
-import { UpdateUserCredentialsInterface } from '../interfaces/update_user_credentials.interface';
-import { UserService } from '../services/user.service';
+import { CreateUserInterface } from '../common/interfaces/create_user.interface';
+import { LoginUserInterface } from '../common/interfaces/login_user.interface';
+import { ResponseUserInterface } from '../common/interfaces/response_user.interface';
+import { UpdateUserInterface } from '../common/interfaces/update_user.interface';
+import { UpdateUserCredentialsInterface } from '../common/interfaces/update_user_credentials.interface';
+import { UserService } from 'src/services/user.service';
 
 @Controller()
 export class UserController {

@@ -8,7 +8,13 @@ declare let process: {
   };
 };
 
-export default function (): any {
+export default function (): {
+  urls: string[];
+  queue: string;
+  queueOptions: {
+    durable: boolean;
+  };
+} {
   return {
     urls: [process.env.RMQ_URL],
     queue: process.env.RMQ_QUEUE,

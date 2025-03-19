@@ -6,10 +6,10 @@ import { Category } from './entity/category.entity';
 import { MenuItem } from './entity/menu_item.entity';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseConfigService } from './config/database_config_service';
-import { MenuItemService } from './common/services/menu_item.service';
-import { RestaurantService } from './common/services/restaurant.service';
-import { RestaurantController } from './common/controllers/restaurant.controller';
-import { MenuItemController } from './common/controllers/menu_item.controller';
+import { MenuItemService } from './services/menu_item.service';
+import { RestaurantService } from './services/restaurant.service';
+import { RestaurantController } from './controllers/restaurant.controller';
+import { MenuItemController } from './controllers/menu_item.controller';
 
 @Module({
   imports: [

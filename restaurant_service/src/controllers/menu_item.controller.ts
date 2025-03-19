@@ -3,7 +3,7 @@ import { MessagePattern } from '@nestjs/microservices';
 import { CreateMenuItemInterface } from 'src/common/interfaces/create_menu_item.interface';
 import { UpdateMenuItemInterface } from 'src/common/interfaces/update_menu_item.interface';
 import { MenuItem } from 'src/entity/menu_item.entity';
-import { MenuItemService } from 'src/common/services/menu_item.service';
+import { MenuItemService } from 'src/services/menu_item.service';
 import { DeleteResult } from 'typeorm';
 
 @Controller()

@@ -1,8 +1,8 @@
 import { Controller } from '@nestjs/common';
-import { OrderService } from 'src/common/services/order.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { CreateOrderInterface } from 'src/common/interfaces/create_order.interface';
 import { UpdateOrderInterface } from 'src/common/interfaces/update_order.interface';
+import { OrderService } from 'src/services/order.service';
 
 @Controller()
 export class OrderController {

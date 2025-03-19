@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DeliveryStatus } from 'src/common/enum/delivery_status';
 import { CreateDeliveryDetailsInterface } from 'src/common/interfaces/create_delivery_details.interface';
 import { UpdateDeliveryDetailsInterface } from 'src/common/interfaces/update_delivery_details.interface';
 import { DeliveryDetails } from 'src/entity/delivery_details.entity';
@@ -18,13 +19,16 @@ export class DeliveryDetailsService {
   ) {
     const deliveryDetails = this.deliveryDetailsRepository.create({
       address: { id: addressId },
-      deliveryStatus: data.deliveryStatus,
+      deliveryStatus: DeliveryStatus.AWAITING_CONFIRMATION,
       deliveryTime: data.deliveryTime,
     });
     return await this.deliveryDetailsRepository.save(deliveryDetails);
   }
 
-  async updateDeliveryDetails(id: number, data: UpdateDeliveryDetailsInterface) {
+  async updateDeliveryDetails(
+    id: number,
+    data: UpdateDeliveryDetailsInterface,
+  ) {
     const deliveryDetails = await this.deliveryDetailsRepository.findOneBy({
       id,
     });
