@@ -13,7 +13,6 @@ import {
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { ResponseUserDto } from 'src/common/dto/user/response_user.dto';
 import { User } from 'src/common/dto/entity_objects/user';
 import { UpdateUserDto } from 'src/common/dto/user/update_user.dto';
 import { UpdateUserCredentialsDto } from 'src/common/dto/user/update_user_credentials.dto';
@@ -52,7 +51,7 @@ export class UserController {
   @Get('/users/:id')
   async getUser(@Param('id') id: number) {
     try {
-      const user: ResponseUserDto = await firstValueFrom(
+      const user: User = await firstValueFrom(
         this.userServiceClient.send('getUserProfile', id),
       );
       if (!user) {
@@ -94,7 +93,7 @@ export class UserController {
 
   @UseGuards(AuthGuard)
   @Put('/profile')
-  async updateUser(@Request() req, @Body() user: UpdateUserCredentialsDto) {
+  async updateUser(@Request() req, @Body() user: UpdateUserDto) {
     try {
       const userId: number = req.user.userId;
       const userResponse: User = await firstValueFrom(
@@ -114,7 +113,7 @@ export class UserController {
 
   @UseGuards(AuthGuard)
   @Put('/profile/password')
-  async updatePassword(@Request() req, @Body() user: UpdateUserDto) {
+  async updatePassword(@Request() req, @Body() user: UpdateUserCredentialsDto) {
     try {
       const userId: number = req.user.userId;
       const userResponse: User = await firstValueFrom(
