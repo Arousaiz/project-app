@@ -123,7 +123,7 @@ export class OrderController {
         (item) => item.menuItemId,
       );
       const orderItemsPrices: Map<number, number> = await firstValueFrom(
-        this.orderServiceClient.send('getMenuItemPrices', menuItemIds),
+        this.orderServiceClient.send('getMenuItemPricesByIds', menuItemIds),
       );
       newOrder.orderItems.forEach(
         (item) => (item.price = orderItemsPrices.get(item.menuItemId)!),
