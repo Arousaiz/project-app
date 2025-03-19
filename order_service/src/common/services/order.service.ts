@@ -55,7 +55,7 @@ export class OrderService {
       orderTime: Date.now(),
       orderStatus: OrderStatus.PLACED,
       deliveryDetails: {
-        deliveryStatus: DeliveryStatus.ORDERED,
+        deliveryStatus: DeliveryStatus.AWAITING_CONFIRMATION,
         deliveryTime: order.deliveryDetails.deliveryTime,
         address: order.deliveryDetails.address,
       },
