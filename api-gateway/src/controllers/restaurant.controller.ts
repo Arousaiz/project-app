@@ -3,52 +3,26 @@ import {
   Controller,
   Delete,
   Get,
-  HttpException,
-  HttpStatus,
-  Inject,
   Param,
   Post,
   Put,
   Query,
 } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { MenuItem } from 'src/common/dto/entity_objects/menu_item';
-import { Restaurant } from 'src/common/dto/entity_objects/restaurant';
 import { CreateMenuItemDto } from 'src/common/dto/restaurant/create_menu_item.dto';
 import { CreateRestaurantDto } from 'src/common/dto/restaurant/create_restaurant.dto';
 import { UpdateMenuItemDto } from 'src/common/dto/restaurant/update_menu_item.dto';
 import { UpdateRestaurantDto } from 'src/common/dto/restaurant/update_restaurant.dto';
-import { firstValueFrom } from 'rxjs';
 import { FindOneParams } from 'src/common/dto/find_one_params';
 import { FindRestaurantMenuParams } from 'src/common/dto/find_restaurant_menu_params';
+import { RestaurantService } from 'src/services/restaurant.service';
 
 @Controller()
 export class RestaurantController {
-  constructor(
-    @Inject('RESTAURANT_SERVICE') private restaurantServiceClient: ClientProxy,
-    @Inject('USER_SERVICE') private userServiceClient: ClientProxy,
-    @Inject('AUTH_SERVICE') private authServiceClient: ClientProxy,
-  ) {}
+  constructor(private readonly restaurantService: RestaurantService) {}
 
   @Get('/restaurants')
   async getRestaurants(@Query('city') city: string) {
-    try {
-      const restaurants: Restaurant = await firstValueFrom(
-        this.restaurantServiceClient.send('findRestaurants', city),
-      );
-      if (!restaurants) {
-        throw new HttpException('Restaurants not found', HttpStatus.NOT_FOUND);
-      }
-      return {
-        message: 'Restaurants fetched successfully',
-        data: restaurants,
-      };
-    } catch {
-      throw new HttpException(
-        'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.restaurantService.getRestaurants(city);
   }
 
   @Get('/restaurants/search/')
@@ -56,70 +30,19 @@ export class RestaurantController {
     @Query('city') city: string,
     @Query('name') name: string,
   ) {
-    try {
-      const restaurants: Restaurant[] = await firstValueFrom(
-        this.restaurantServiceClient.send('searchRestaurants', [city, name]),
-      );
-      if (!restaurants) {
-        throw new HttpException('Restaurants not found', HttpStatus.NOT_FOUND);
-      }
-      return {
-        message: 'Restaurants fetched successfully',
-        data: restaurants,
-      };
-    } catch {
-      throw new HttpException(
-        'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.restaurantService.searchRestaurants(city, name);
   }
 
   @Get('/restaurants/:id')
   async getRestaurantById(@Param('id') { id }: FindOneParams) {
-    try {
-      const restaurant: Restaurant = await firstValueFrom(
-        this.restaurantServiceClient.send('findRestaurantById', id),
-      );
-      if (!restaurant) {
-        throw new HttpException('Restaurant not found', HttpStatus.NOT_FOUND);
-      }
-      return {
-        message: 'Restaurant fetched successfully',
-        data: restaurant,
-      };
-    } catch {
-      throw new HttpException(
-        'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.restaurantService.getRestaurantById(id);
   }
 
   @Get('/restaurants/:id/menu/:menu_id')
   async getMenuItemInRestaurantById(
     @Param() { id, menuId }: FindRestaurantMenuParams,
   ) {
-    try {
-      const menuItem: MenuItem = await firstValueFrom(
-        this.restaurantServiceClient.send('findMenuItemInRestaurantById', [
-          id,
-          menuId,
-        ]),
-      );
-      if (!menuItem) {
-        throw new HttpException('MenuItem not found', HttpStatus.NOT_FOUND);
-      }
-      return {
-        message: 'MenuItem fetched successfully',
-        data: menuItem,
-      };
-    } catch {
-      throw new HttpException(
-        'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.restaurantService.getMenuItemInRestaurantById(id, menuId);
   }
 
   @Get('restaurant/:id/menu')
@@ -127,46 +50,15 @@ export class RestaurantController {
     @Param('id') { id }: FindOneParams,
     @Query('name') name: string,
   ) {
-    try {
-      const menuItems: MenuItem[] = await firstValueFrom(
-        this.restaurantServiceClient.send('searchMenuItemsInRestaurantByName', {
-          id,
-          name,
-        }),
-      );
-      if (!menuItems) {
-        throw new HttpException('MenuItems not found', HttpStatus.NOT_FOUND);
-      }
-      return {
-        message: 'MenuItems fetched successfully',
-        data: menuItems,
-      };
-    } catch {
-      throw new HttpException(
-        'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.restaurantService.searchMenuItemsInRestaurantByName(
+      id,
+      name,
+    );
   }
 
   @Post('/restaurant/create')
   async createRestaurant(@Body() newRestaurant: CreateRestaurantDto) {
-    try {
-      const restaurant: Restaurant = await firstValueFrom(
-        this.restaurantServiceClient.send('createRestaurant', newRestaurant),
-      );
-      if (!restaurant)
-        throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
-      return {
-        message: 'Restaurant created successfully',
-        data: restaurant,
-      };
-    } catch {
-      throw new HttpException(
-        'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.restaurantService.createRestaurant(newRestaurant);
   }
 
   @Post('/restaurant/:id/menu/')
@@ -174,25 +66,7 @@ export class RestaurantController {
     @Param('id') { id }: FindOneParams,
     @Body() newMenuItem: CreateMenuItemDto,
   ) {
-    try {
-      const menuItem: MenuItem = await firstValueFrom(
-        this.restaurantServiceClient.send('createMenuItem', {
-          id,
-          newMenuItem,
-        }),
-      );
-      if (!menuItem)
-        throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
-      return {
-        message: 'new MenuItem created successfully',
-        data: menuItem,
-      };
-    } catch {
-      throw new HttpException(
-        'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.restaurantService.createMenuItem(id, newMenuItem);
   }
 
   @Put('/restaurant/:id')
@@ -200,25 +74,7 @@ export class RestaurantController {
     @Param('id') { id }: FindOneParams,
     @Body() updateRestaurant: UpdateRestaurantDto,
   ) {
-    try {
-      const restaurant: Restaurant = await firstValueFrom(
-        this.restaurantServiceClient.send('updateRestaurant', [
-          id,
-          updateRestaurant,
-        ]),
-      );
-      if (!restaurant)
-        throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
-      return {
-        message: 'Restaurant updated successfully',
-        data: restaurant,
-      };
-    } catch {
-      throw new HttpException(
-        'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.restaurantService.updateRestaurant(id, updateRestaurant);
   }
 
   @Put('/restaurant/:id/menu/:menu_id')
@@ -226,65 +82,20 @@ export class RestaurantController {
     @Param() { id, menuId }: FindRestaurantMenuParams,
     @Body() updateMenuItem: UpdateMenuItemDto,
   ) {
-    try {
-      const menuItem: MenuItem = await firstValueFrom(
-        this.restaurantServiceClient.send('updateMenuItem', [
-          id,
-          menuId,
-          updateMenuItem,
-        ]),
-      );
-      if (!menuItem)
-        throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
-      return {
-        message: 'MenuItem updated successfully',
-        data: menuItem,
-      };
-    } catch {
-      throw new HttpException(
-        'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.restaurantService.updateMenuItem(
+      id,
+      menuId,
+      updateMenuItem,
+    );
   }
 
   @Delete('/restaurant/:id')
   async deleteRestaurant(@Param('id') { id }: FindOneParams) {
-    try {
-      const restaurant: Restaurant = await firstValueFrom(
-        this.restaurantServiceClient.send('deleteRestaurant', id),
-      );
-      if (!restaurant)
-        throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
-      return {
-        message: 'Restaurant deleted successfully',
-        data: restaurant,
-      };
-    } catch {
-      throw new HttpException(
-        'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.restaurantService.deleteRestaurant(id);
   }
 
   @Delete('/restaurant/:id/menu/:menu_id')
   async deleteMenuItem(@Param() { id, menuId }: FindRestaurantMenuParams) {
-    try {
-      const menuItem: MenuItem = await firstValueFrom(
-        this.restaurantServiceClient.send('deleteMenuItem', [id, menuId]),
-      );
-      if (!menuItem)
-        throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
-      return {
-        message: 'MenuItem deleted successfully',
-        data: menuItem,
-      };
-    } catch {
-      throw new HttpException(
-        'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.restaurantService.deleteMenuItem(id, menuId);
   }
 }

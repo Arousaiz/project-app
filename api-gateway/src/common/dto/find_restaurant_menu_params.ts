@@ -7,5 +7,5 @@ export class FindRestaurantMenuParams {
 
   @IsUUID()
   @IsNotEmpty()
-  menuId: number;
+  menuId: string;
 }
