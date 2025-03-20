@@ -1,7 +1,4 @@
-import {
-  IsStrongPassword,
-  Length,
-} from 'class-validator';
+import { IsStrongPassword, Length } from 'class-validator';
 
 export class CreateUserDto {
   @IsStrongPassword({
@@ -9,8 +6,10 @@ export class CreateUserDto {
     minLowercase: 1,
     minUppercase: 1,
     minNumbers: 1,
-    minSymbols: 1,})
+    minSymbols: 1,
+  })
   password: string;
+
   @Length(6, 50)
   username: string;
 }
