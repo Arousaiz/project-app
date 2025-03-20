@@ -1,4 +1,10 @@
-import { IsOptional, IsPhoneNumber, IsString } from "class-validator";
+import {
+  IsDefined,
+  IsOptional,
+  IsPhoneNumber,
+  IsString,
+  ValidateIf,
+} from 'class-validator';
 
 export class UpdateRestaurantDto {
   @IsOptional()
@@ -13,4 +19,11 @@ export class UpdateRestaurantDto {
   @IsOptional()
   @IsString()
   operatingHours?: string;
+
+  @ValidateIf(
+    (o: UpdateRestaurantDto) =>
+      !o.name && !o.cuisine && !o.phone && !o.operatingHours,
+  )
+  @IsDefined()
+  protected readonly atLeastOne: undefined;
 }
