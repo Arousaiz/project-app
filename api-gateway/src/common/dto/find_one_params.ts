@@ -1,6 +1,6 @@
-import { IsNumber } from "class-validator";
+import { IsInt } from 'class-validator';
 
 export class FindOneParams {
-    @IsNumber()
-    id: number;
+  @IsInt()
+  id: number;
 }
