@@ -3,6 +3,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  IsUUID,
   ValidateIf,
 } from 'class-validator';
 
@@ -20,12 +21,12 @@ export class UpdateMenuItemDto {
   price?: number;
 
   @IsOptional()
-  @IsNumber()
-  categoryId?: number;
+  @IsUUID()
+  categoryId?: string;
 
   @ValidateIf(
-    (o: UpdateMenuItemDto) =>
-      !o.name && !o.description && !o.price && !o.categoryId,
+    (obj: UpdateMenuItemDto) =>
+      !obj.name && !obj.description && !obj.price && !obj.categoryId,
   )
   @IsDefined()
   protected readonly atLeastOne: undefined;

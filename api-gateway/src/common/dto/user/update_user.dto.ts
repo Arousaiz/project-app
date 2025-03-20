@@ -19,7 +19,9 @@ export class UpdateUserDto {
   @IsEmail()
   email?: string;
 
-  @ValidateIf((o: UpdateUserDto) => !o.firstName && !o.lastName && !o.email)
+  @ValidateIf(
+    (obj: UpdateUserDto) => !obj.firstName && !obj.lastName && !obj.email,
+  )
   @IsDefined()
   protected readonly atLeastOne: undefined;
 }

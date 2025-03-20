@@ -12,7 +12,7 @@ export class RestaurantService {
     private restaurantsRepository: Repository<Restaurant>,
   ) {}
 
-  async findRestaurantById(id: number): Promise<Restaurant | null> {
+  async findRestaurantById(id: string): Promise<Restaurant | null> {
     return this.restaurantsRepository.findOneBy({ id: id });
   }
   async findAllRestaurants(): Promise<Restaurant[]> {
@@ -63,7 +63,7 @@ export class RestaurantService {
   }
 
   async updateRestaurant(
-    id: number,
+    id: string,
     restaurant: UpdateRestaurantInterface,
   ): Promise<Restaurant> {
     const data = await this.restaurantsRepository.findOneBy({ id });
@@ -88,7 +88,7 @@ export class RestaurantService {
     }
   }
 
-  async deleteRestaurant(id: number): Promise<DeleteResult> {
+  async deleteRestaurant(id: string): Promise<DeleteResult> {
     return this.restaurantsRepository.delete(id);
   }
 }

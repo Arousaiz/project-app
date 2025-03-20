@@ -1,6 +1,11 @@
 import { Type } from 'class-transformer';
 import { CreateAddressDto } from './create_address.dto';
-import { IsNotEmptyObject, IsNumber, ValidateNested } from 'class-validator';
+import {
+  IsNotEmptyObject,
+  IsInt,
+  ValidateNested,
+  IsPositive,
+} from 'class-validator';
 
 export class CreateDeliveryDetailsDto {
   @IsNotEmptyObject()
@@ -8,6 +13,7 @@ export class CreateDeliveryDetailsDto {
   @ValidateNested()
   address: CreateAddressDto;
 
-  @IsNumber()
+  @IsInt()
+  @IsPositive()
   deliveryTime: number;
 }

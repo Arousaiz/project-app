@@ -11,7 +11,7 @@ export class RestaurantController {
   constructor(private readonly restaurantService: RestaurantService) {}
 
   @MessagePattern('findRestaurantById')
-  async findRestaurantById(id: number) {
+  async findRestaurantById(id: string) {
     return await this.restaurantService.findRestaurantById(id);
   }
 
@@ -32,14 +32,14 @@ export class RestaurantController {
 
   @MessagePattern('updateRestaurant')
   async updateRestaurant(
-    id: number,
+    id: string,
     restaurant: UpdateRestaurantInterface,
   ): Promise<Restaurant> {
     return await this.restaurantService.updateRestaurant(id, restaurant);
   }
 
   @MessagePattern('deleteRestaurant')
-  async deleteRestaurant(id: number) {
+  async deleteRestaurant(id: string) {
     return await this.restaurantService.deleteRestaurant(id);
   }
 }

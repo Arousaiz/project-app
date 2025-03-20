@@ -30,12 +30,12 @@ export class UserController {
   }
 
   @MessagePattern('findUserById')
-  async findUserById(id: number): Promise<User | null> {
+  async findUserById(id: string): Promise<User | null> {
     return await this.userService.findUserById(id);
   }
 
   @MessagePattern('getUserProfile')
-  async getUserProfile(id: number): Promise<ResponseUserInterface> {
+  async getUserProfile(id: string): Promise<ResponseUserInterface> {
     return await this.userService.getUserProfile(id);
   }
 
@@ -45,18 +45,18 @@ export class UserController {
   }
 
   @MessagePattern('deleteUser')
-  async deleteUser(id: number): Promise<any> {
+  async deleteUser(id: string): Promise<any> {
     await this.userService.deleteUser(id);
   }
 
   @MessagePattern('updateUser')
-  async updateUser(id: number, user: UpdateUserInterface): Promise<any> {
+  async updateUser(id: string, user: UpdateUserInterface): Promise<any> {
     return await this.userService.updateUser(id, user);
   }
 
   @MessagePattern('updateUserByCredentials')
   async updateUserByUsernameAndPassword(
-    id: number,
+    id: string,
     user: UpdateUserCredentialsInterface,
   ): Promise<any> {
     return await this.userService.updateUserByUsernameAndPassword(id, user);

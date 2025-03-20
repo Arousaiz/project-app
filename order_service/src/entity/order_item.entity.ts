@@ -4,11 +4,11 @@ import { MenuItem } from './menu_item.entity';
 
 @Entity('order_item')
 export class OrderItem {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Column({ type: 'int', nullable: false })
-  menuItemId: number;
+  @Column({ type: 'uuid', nullable: false })
+  menuItemId: string;
 
   @Column({ type: 'float', nullable: false })
   price: number;

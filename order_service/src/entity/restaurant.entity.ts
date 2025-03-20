@@ -11,8 +11,8 @@ import { Order } from './order.entity';
 
 @Entity('restaurant')
 export class Restaurant {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'varchar', length: 100, nullable: false, unique: true })
   name: string;

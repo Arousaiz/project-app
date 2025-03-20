@@ -14,8 +14,8 @@ import { PaymentMethod } from 'src/common/enum/payment_method';
 
 @Entity('Order')
 export class Order {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'float', nullable: false })
   price: number;
@@ -42,10 +42,10 @@ export class Order {
   })
   orderItems: OrderItem[];
 
-  userId: number;
+  @Column({ type: 'uuid', nullable: false })
+  userId: string;
 
   @ManyToOne(() => Restaurant, (restaurant) => restaurant.orders)
   restaurant: Restaurant;
 }
 export { OrderStatus, PaymentMethod };
-

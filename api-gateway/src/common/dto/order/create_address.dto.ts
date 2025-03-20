@@ -1,9 +1,16 @@
-import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Min,
+} from 'class-validator';
 
 export class CreateAddressDto {
   @IsOptional()
-  @IsInt()
-  id?: number;
+  @IsUUID()
+  id?: string;
 
   @IsString()
   @IsNotEmpty()
@@ -14,5 +21,6 @@ export class CreateAddressDto {
   street: string;
 
   @IsInt()
+  @Min(1)
   house: number;
 }

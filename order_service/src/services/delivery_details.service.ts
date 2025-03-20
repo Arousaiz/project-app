@@ -14,7 +14,7 @@ export class DeliveryDetailsService {
   ) {}
 
   async createDeliveryDetails(
-    addressId: number,
+    addressId: string,
     data: CreateDeliveryDetailsInterface,
   ) {
     const deliveryDetails = this.deliveryDetailsRepository.create({
@@ -26,7 +26,7 @@ export class DeliveryDetailsService {
   }
 
   async updateDeliveryDetails(
-    id: number,
+    id: string,
     data: UpdateDeliveryDetailsInterface,
   ) {
     const deliveryDetails = await this.deliveryDetailsRepository.findOneBy({

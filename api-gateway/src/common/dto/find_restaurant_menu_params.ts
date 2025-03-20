@@ -1,9 +1,11 @@
-import { IsInt } from 'class-validator';
+import { IsNotEmpty, IsUUID } from 'class-validator';
 
 export class FindRestaurantMenuParams {
-  @IsInt()
-  id: number;
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
 
-  @IsInt()
+  @IsUUID()
+  @IsNotEmpty()
   menuId: number;
 }

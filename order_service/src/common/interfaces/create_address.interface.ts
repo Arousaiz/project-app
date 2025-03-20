@@ -1,5 +1,5 @@
 export interface CreateAddressInterface {
-  id?: number;
+  id?: string;
   city: string;
   street: string;
   house: number;

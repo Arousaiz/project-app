@@ -4,11 +4,11 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 // TODO: add favorites
 @Entity('user')
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Column({ type: 'int', nullable: true })
-  addressId: number;
+  @Column({ type: 'uuid', nullable: true })
+  addressId: string;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
   firstName: string;

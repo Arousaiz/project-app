@@ -1,5 +1,5 @@
 export class Address {
-  id: number;
+  id: string;
   city: string;
   street: string;
   house: string;

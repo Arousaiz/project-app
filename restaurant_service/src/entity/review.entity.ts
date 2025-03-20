@@ -4,8 +4,8 @@ import { User } from './user.entity';
 
 @Entity('review')
 export class Review {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'varchar', length: 100, nullable: false, unique: true })
   text: string;

@@ -4,18 +4,24 @@ import { CreateOrderItemDto } from './create_order_item.dto';
 import {
   ArrayNotEmpty,
   IsInt,
+  IsNotEmpty,
   IsNotEmptyObject,
+  IsPositive,
+  IsUUID,
   ValidateNested,
 } from 'class-validator';
 
 export class CreateOrderDto {
-  @IsInt()
-  userId: number;
+  @IsUUID()
+  @IsNotEmpty()
+  userId: string;
+
+  @IsUUID()
+  @IsNotEmpty()
+  restaurantId: string;
 
   @IsInt()
-  restaurantId: number;
-
-  @IsInt()
+  @IsPositive()
   orderTime: number;
 
   @ArrayNotEmpty()

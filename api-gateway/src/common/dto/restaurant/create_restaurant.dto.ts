@@ -1,14 +1,15 @@
 import {
-  IsInt,
   IsNotEmpty,
   IsPhoneNumber,
   IsString,
+  IsUUID,
   Length,
 } from 'class-validator';
 
 export class CreateRestaurantDto {
-  @IsInt()
-  addressId: number;
+  @IsUUID()
+  @IsNotEmpty()
+  addressId: string;
 
   @Length(5, 100)
   name: string;

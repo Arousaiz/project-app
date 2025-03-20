@@ -4,8 +4,8 @@ import { OrderItem } from './order_item.entity';
 
 @Entity('menu_item')
 export class MenuItem {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'varchar', length: 100, nullable: false })
   name: string;
@@ -16,7 +16,8 @@ export class MenuItem {
   @Column({ type: 'float', nullable: false })
   price: number;
 
-  categoryId: number;
+  @Column({ type: 'uuid', nullable: false })
+  categoryId: string;
 
   @ManyToOne(() => Restaurant, (restaurant) => restaurant.menuItems, {})
   restaurant: Restaurant;

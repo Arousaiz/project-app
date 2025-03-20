@@ -1,5 +1,5 @@
 export interface CreateRestaurantInterface {
-  addressId: number;
+  addressId: string;
   name: string;
   cuisine: string;
   phone: string;

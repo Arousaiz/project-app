@@ -4,7 +4,7 @@ import { OrderItem } from './order_item';
 import { PaymentMethod } from 'src/common/enum/payment_method';
 
 export class Order {
-  id: number;
+  id: string;
   price: number;
   discount: number;
   paymentMethod: PaymentMethod;

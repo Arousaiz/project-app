@@ -25,8 +25,8 @@ export class UpdateOrderDto {
   deliveryDetails?: UpdateDeliveryDetailsDto;
 
   @ValidateIf(
-    (o: UpdateOrderDto) =>
-      !o.paymentMethod && !o.orderStatus && !o.deliveryDetails,
+    (obj: UpdateOrderDto) =>
+      !obj.paymentMethod && !obj.orderStatus && !obj.deliveryDetails,
   )
   @IsDefined()
   protected readonly atLeastOne: undefined;

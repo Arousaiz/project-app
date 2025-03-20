@@ -20,7 +20,7 @@ export class AddressService {
     return await this.addressRepository.save(address);
   }
 
-  async getAddress(id: number) {
+  async getAddress(id: string) {
     const address = await this.addressRepository.findOne({ where: { id: id } });
     if (address == null) {
       throw new HttpException('Address not found', HttpStatus.NOT_FOUND);

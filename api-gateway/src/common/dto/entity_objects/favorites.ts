@@ -1,7 +1,7 @@
 export class Favorites {
-  id: number;
-  userId: number;
-  menuItemId: number;
-  restaurantId: number;
+  id: string;
+  userId: string;
+  menuItemId: string;
+  restaurantId: string;
   dateAdded: number;
 }

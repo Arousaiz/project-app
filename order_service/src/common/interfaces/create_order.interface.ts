@@ -3,8 +3,8 @@ import { CreateDeliveryDetailsInterface } from './create_delivery_details.interf
 import { CreateOrderItemInterface } from './create_order_item.interface';
 
 export interface CreateOrderInterface {
-  userId: number;
-  restaurantId: number;
+  userId: string;
+  restaurantId: string;
   paymentMethod: PaymentMethod;
   orderTime: number;
   orderItems: CreateOrderItemInterface[];

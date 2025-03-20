@@ -12,7 +12,7 @@ export class OrderItemService {
   ) {}
 
   async createOrderItem(
-    orderId: number,
+    orderId: string,
     orderItem: CreateOrderItemInterface,
   ): Promise<OrderItem> {
     const item = this.orderItemsRepository.create({

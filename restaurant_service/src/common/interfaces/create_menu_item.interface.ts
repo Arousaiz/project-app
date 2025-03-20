@@ -1,6 +1,6 @@
 export interface CreateMenuItemInterface {
-  restaurantId: number;
-  categoryId: number;
+  restaurantId: string;
+  categoryId: string;
   name: string;
   description: string;
   price: number;

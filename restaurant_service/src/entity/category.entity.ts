@@ -3,8 +3,8 @@ import { MenuItem } from './menu_item.entity';
 
 @Entity('category')
 export class Category {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'varchar', length: 100, nullable: false, unique: true })
   name: string;

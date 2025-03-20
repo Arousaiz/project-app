@@ -66,7 +66,7 @@ export class OrderController {
   @Get('profile/orders')
   async getOrdersByUserId(@Request() req) {
     try {
-      const userId: number = req.user.userId;
+      const userId: string = req.user.userId;
       const orders: Order[] = await firstValueFrom(
         this.orderServiceClient.send('findOrdersByUserId', userId),
       );
@@ -120,10 +120,10 @@ export class OrderController {
   @Post('orders')
   async createOrder(@Body() newOrder: CreateOrderDto) {
     try {
-      const menuItemIds: number[] = newOrder.orderItems.map(
+      const menuItemIds: string[] = newOrder.orderItems.map(
         (item) => item.menuItemId,
       );
-      const orderItemsPrices: Map<number, number> = await firstValueFrom(
+      const orderItemsPrices: Map<string, number> = await firstValueFrom(
         this.orderServiceClient.send('getMenuItemPricesByIds', menuItemIds),
       );
       newOrder.orderItems.forEach(

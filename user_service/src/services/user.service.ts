@@ -66,11 +66,11 @@ export class UserService {
     return this.usersRepository.findOneBy({ username: username });
   }
 
-  async findUserById(id: number): Promise<User | null> {
+  async findUserById(id: string): Promise<User | null> {
     return this.usersRepository.findOneBy({ id: id });
   }
 
-  async getUserProfile(id: number): Promise<ResponseUserInterface> {
+  async getUserProfile(id: string): Promise<ResponseUserInterface> {
     const user = await this.findUserById(id);
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
@@ -78,12 +78,12 @@ export class UserService {
     return this.buildResponseUser(user);
   }
 
-  async deleteUser(id: number): Promise<DeleteResult> {
+  async deleteUser(id: string): Promise<DeleteResult> {
     return this.usersRepository.delete(id);
   }
 
   async updateUser(
-    id: number,
+    id: string,
     user: UpdateUserInterface,
   ): Promise<ResponseUserInterface> {
     const data = await this.usersRepository.findOneBy({ id });
@@ -103,7 +103,7 @@ export class UserService {
   }
 
   async updateUserByUsernameAndPassword(
-    id: number,
+    id: string,
     user: UpdateUserCredentialsInterface,
   ): Promise<ResponseUserInterface> {
     const data = await this.usersRepository.findOneBy({ id });

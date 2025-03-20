@@ -1,9 +1,9 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
 export class payloadDto {
-  @IsNumber()
+  @IsUUID()
   @IsNotEmpty()
-  userId: number;
+  userId: string;
 
   @IsString()
   @IsNotEmpty()

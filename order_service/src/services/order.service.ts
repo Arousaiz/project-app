@@ -19,15 +19,15 @@ export class OrderService {
     return this.ordersRepository.find();
   }
 
-  findOrderById(id: number): Promise<Order | null> {
+  findOrderById(id: string): Promise<Order | null> {
     return this.ordersRepository.findOneBy({ id });
   }
 
-  findOrdersByUserId(userId: number): Promise<Order[]> {
+  findOrdersByUserId(userId: string): Promise<Order[]> {
     return this.ordersRepository.find({ where: { userId: userId } });
   }
 
-  findOrdersByRestaurantId(restaurantId: number): Promise<Order[]> {
+  findOrdersByRestaurantId(restaurantId: string): Promise<Order[]> {
     return this.ordersRepository.find({
       where: { restaurant: { id: restaurantId } },
     });
@@ -65,7 +65,7 @@ export class OrderService {
     return this.ordersRepository.save(data);
   }
 
-  async updateOrder(id: number, data: UpdateOrderInterface): Promise<Order> {
+  async updateOrder(id: string, data: UpdateOrderInterface): Promise<Order> {
     const order = await this.findOrderById(id);
     if (!order)
       throw new HttpException('Order not found', HttpStatus.NOT_FOUND);
@@ -80,13 +80,13 @@ export class OrderService {
     });
   }
 
-  cancelOrder(id: number): Promise<UpdateResult> {
+  cancelOrder(id: string): Promise<UpdateResult> {
     return this.ordersRepository.update(id, {
       orderStatus: OrderStatus.CANCELLED,
     });
   }
 
-  deleteOrder(id: number): Promise<DeleteResult> {
+  deleteOrder(id: string): Promise<DeleteResult> {
     return this.ordersRepository.delete(id);
   }
 }

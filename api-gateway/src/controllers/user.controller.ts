@@ -71,7 +71,7 @@ export class UserController {
   @Get('/profile')
   async getUserProfile(@Request() req) {
     try {
-      const userId: number = req.user.userId;
+      const userId: string = req.user.userId;
       const userResponse: User = await firstValueFrom(
         this.userServiceClient.send('getUserProfile', userId),
       );
@@ -96,7 +96,7 @@ export class UserController {
   @Put('/profile')
   async updateUser(@Request() req, @Body() user: UpdateUserDto) {
     try {
-      const userId: number = req.user.userId;
+      const userId: string = req.user.userId;
       const userResponse: User = await firstValueFrom(
         this.userServiceClient.send('updateUser', [userId, user]),
       );
@@ -116,7 +116,7 @@ export class UserController {
   @Put('/profile/password')
   async updatePassword(@Request() req, @Body() user: UpdateUserCredentialsDto) {
     try {
-      const userId: number = req.user.userId;
+      const userId: string = req.user.userId;
       const userResponse: User = await firstValueFrom(
         this.userServiceClient.send('updateUserByCredentials', [userId, user]),
       );
@@ -139,7 +139,7 @@ export class UserController {
   @Delete('/profile')
   async deleteUser(@Request() req) {
     try {
-      const userId: number = req.user.userId;
+      const userId: string = req.user.userId;
       const userResponse: User = await firstValueFrom(
         this.userServiceClient.send('deleteUser', userId),
       );

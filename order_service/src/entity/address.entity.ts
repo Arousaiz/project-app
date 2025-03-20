@@ -3,8 +3,8 @@ import { DeliveryDetails } from './delivery_details.entity';
 import { Restaurant } from './restaurant.entity';
 @Entity('address')
 export class Address {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'varchar', length: 50, nullable: false })
   city: string;

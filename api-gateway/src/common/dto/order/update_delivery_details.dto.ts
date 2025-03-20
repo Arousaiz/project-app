@@ -3,6 +3,7 @@ import {
   IsEnum,
   IsInt,
   IsOptional,
+  IsPositive,
   ValidateIf,
 } from 'class-validator';
 import { DeliveryStatus } from 'src/common/enum/delivery_status';
@@ -14,10 +15,11 @@ export class UpdateDeliveryDetailsDto {
 
   @IsOptional()
   @IsInt()
+  @IsPositive()
   deliveryTime?: number;
 
   @ValidateIf(
-    (o: UpdateDeliveryDetailsDto) => !o.deliveryStatus && !o.deliveryTime,
+    (obj: UpdateDeliveryDetailsDto) => !obj.deliveryStatus && !obj.deliveryTime,
   )
   @IsDefined()
   protected readonly atLeastOne: undefined;

@@ -9,17 +9,16 @@ import { Address } from './address.entity';
 import { Order } from './order.entity';
 import { DeliveryStatus } from 'src/common/enum/delivery_status';
 
-
 @Entity('delivery_details')
 export class DeliveryDetails {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({
     type: 'enum',
     enum: DeliveryStatus,
     nullable: false,
-    default: DeliveryStatus.ORDERED,
+    default: DeliveryStatus.AWAITING_CONFIRMATION,
   })
   deliveryStatus: DeliveryStatus;
 

@@ -1,6 +1,7 @@
-import { IsInt } from 'class-validator';
+import { IsNotEmpty, IsUUID } from 'class-validator';
 
 export class FindOneParams {
-  @IsInt()
-  id: number;
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
 }

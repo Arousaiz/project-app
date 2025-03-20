@@ -1,5 +1,5 @@
 export interface CreateOrderItemInterface {
-  menuItemId: number;
+  menuItemId: string;
   count: number;
   price: number;
 }

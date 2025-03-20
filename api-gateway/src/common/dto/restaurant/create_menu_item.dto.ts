@@ -1,11 +1,20 @@
-import { IsInt, IsNumber, IsOptional, Length } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsUUID,
+  Length,
+} from 'class-validator';
 
 export class CreateMenuItemDto {
-  @IsInt()
-  restaurantId: number;
+  @IsUUID()
+  @IsNotEmpty()
+  restaurantId: string;
 
-  @IsInt()
-  categoryId: number;
+  @IsUUID()
+  @IsNotEmpty()
+  categoryId: string;
 
   @Length(5, 100)
   name: string;
@@ -15,5 +24,6 @@ export class CreateMenuItemDto {
   description?: string;
 
   @IsNumber()
+  @IsPositive()
   price: number;
 }

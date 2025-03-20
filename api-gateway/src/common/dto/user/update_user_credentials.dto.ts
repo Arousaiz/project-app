@@ -21,7 +21,7 @@ export class UpdateUserCredentialsDto {
   })
   password?: string;
 
-  @ValidateIf((o: UpdateUserCredentialsDto) => !o.username && !o.password)
+  @ValidateIf((obj: UpdateUserCredentialsDto) => !obj.username && !obj.password)
   @IsDefined()
   protected readonly atLeastOne: undefined;
 }

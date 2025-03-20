@@ -2,7 +2,7 @@ import { Address } from './address';
 import { MenuItem } from './menu_item';
 
 export class Restaurant {
-  id: number;
+  id: string;
   name: string;
   cuisine: string;
   phone: string;

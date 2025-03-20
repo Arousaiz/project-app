@@ -16,22 +16,22 @@ export class MenuItemService {
     return this.menuItemsRepository.find();
   }
 
-  async findMenuItemsByIds(ids: number[]): Promise<MenuItem[]> {
+  async findMenuItemsByIds(ids: string[]): Promise<MenuItem[]> {
     return this.menuItemsRepository.find({ where: { id: In(ids) } });
   }
 
-  async getMenuItemPricesByIds(ids: number[]): Promise<Map<number, number>> {
+  async getMenuItemPricesByIds(ids: string[]): Promise<Map<string, number>> {
     const menuItems = await this.findMenuItemsByIds(ids);
-    const prices: Map<number, number> = new Map<number, number>();
+    const prices: Map<string, number> = new Map<string, number>();
     menuItems.forEach((item) => prices.set(item.id, item.price));
     return prices;
   }
 
-  async findMenuItemById(id: number): Promise<MenuItem | null> {
+  async findMenuItemById(id: string): Promise<MenuItem | null> {
     return this.menuItemsRepository.findOneBy({ id: id });
   }
 
-  async findMenuItemsByRestaurantId(id: number): Promise<MenuItem[]> {
+  async findMenuItemsByRestaurantId(id: string): Promise<MenuItem[]> {
     return this.menuItemsRepository.find({
       relations: { restaurant: true },
       where: { restaurant: { id: id } },
@@ -39,7 +39,7 @@ export class MenuItemService {
   }
 
   async findMenuItemByName(
-    restaurantId: number,
+    restaurantId: string,
     name: string,
   ): Promise<MenuItem | null> {
     return this.menuItemsRepository.findOneBy({
@@ -48,15 +48,15 @@ export class MenuItemService {
     });
   }
 
-  async searchMenuItemsByName(name: string, id: number): Promise<MenuItem[]> {
+  async searchMenuItemsByName(name: string, id: string): Promise<MenuItem[]> {
     return this.menuItemsRepository.find({
       where: { name: Like(`%${name}%`), restaurant: { id: id } },
     });
   }
 
   async filterMenuItemsByCategory(
-    restaurantId: number,
-    categoryId: number,
+    restaurantId: string,
+    categoryId: string,
   ): Promise<MenuItem[]> {
     return this.menuItemsRepository.findBy({
       category: { id: categoryId },
@@ -65,7 +65,7 @@ export class MenuItemService {
   }
 
   async createMenuItem(
-    restaurantId: number,
+    restaurantId: string,
     menuItem: CreateMenuItemInterface,
   ): Promise<MenuItem> {
     if (!menuItem)
@@ -87,7 +87,7 @@ export class MenuItemService {
   }
 
   async updateMenuItem(
-    id: number,
+    id: string,
     menuItem: UpdateMenuItemInterface,
   ): Promise<MenuItem> {
     const data = await this.menuItemsRepository.findOneBy({ id });
@@ -110,7 +110,7 @@ export class MenuItemService {
     });
   }
 
-  async deleteMenuItem(id: number): Promise<DeleteResult> {
+  async deleteMenuItem(id: string): Promise<DeleteResult> {
     return this.menuItemsRepository.delete(id);
   }
 }

@@ -14,17 +14,17 @@ export class OrderController {
   }
 
   @MessagePattern('findOrderById')
-  async findOrderById(id: number) {
+  async findOrderById(id: string) {
     return await this.orderService.findOrderById(id);
   }
 
   @MessagePattern('findOrdersByUserId')
-  async findOrdersByUserId(userId: number) {
+  async findOrdersByUserId(userId: string) {
     return await this.orderService.findOrdersByUserId(userId);
   }
 
   @MessagePattern('findOrdersByRestaurantId')
-  async findOrdersByRestaurantId(restaurantId: number) {
+  async findOrdersByRestaurantId(restaurantId: string) {
     return await this.orderService.findOrdersByRestaurantId(restaurantId);
   }
 
@@ -34,12 +34,12 @@ export class OrderController {
   }
 
   @MessagePattern('updateOrder')
-  async updateOrder(id: number, data: UpdateOrderInterface) {
+  async updateOrder(id: string, data: UpdateOrderInterface) {
     return await this.orderService.updateOrder(id, data);
   }
 
   @MessagePattern('cancelOrder')
-  async cancelOrder(id: number) {
+  async cancelOrder(id: string) {
     return await this.orderService.cancelOrder(id);
   }
 }

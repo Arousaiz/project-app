@@ -1,13 +1,24 @@
-import { IsInt, IsNumber, IsOptional } from 'class-validator';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsUUID,
+  Min,
+} from 'class-validator';
 
 export class CreateOrderItemDto {
-  @IsInt()
-  menuItemId: number;
+  @IsUUID()
+  @IsNotEmpty()
+  menuItemId: string;
 
   @IsOptional()
   @IsNumber()
+  @IsPositive()
   price?: number;
 
-  @IsNumber()
+  @IsInt()
+  @Min(1)
   count: number;
 }
