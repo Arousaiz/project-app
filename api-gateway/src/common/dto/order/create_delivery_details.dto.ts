@@ -1,8 +1,13 @@
-import { DeliveryStatus } from 'src/entity/delivery_details.entity';
+import { Type } from 'class-transformer';
 import { CreateAddressDto } from './create_address.dto';
+import { IsNotEmptyObject, IsNumber, ValidateNested } from 'class-validator';
 
-export interface CreateDeliveryDetailsDto {
+export class CreateDeliveryDetailsDto {
+  @IsNotEmptyObject()
+  @Type(() => CreateAddressDto)
+  @ValidateNested()
   address: CreateAddressDto;
-  deliveryStatus: DeliveryStatus;
+
+  @IsNumber()
   deliveryTime: number;
 }

@@ -1,8 +1,8 @@
-import { MenuItem } from "./menu_item";
+import { MenuItem } from './menu_item';
 
 export class OrderItem {
-    id: number;
-    count: number;
-    menuItem: MenuItem;
-    price: number;
+  id: number;
+  count: number;
+  menuItem: MenuItem;
+  price: number;
 }

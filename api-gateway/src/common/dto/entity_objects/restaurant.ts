@@ -11,4 +11,3 @@ export class Restaurant {
   address: Address;
   menuItems: MenuItem[];
 }
-

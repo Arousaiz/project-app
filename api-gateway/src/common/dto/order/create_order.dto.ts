@@ -1,14 +1,30 @@
-import { PaymentMethod } from 'src/common/enum/payment_method';
+import { Type } from 'class-transformer';
 import { CreateDeliveryDetailsDto } from './create_delivery_details.dto';
 import { CreateOrderItemDto } from './create_order_item.dto';
-import { OrderStatus } from 'src/common/enum/order_status';
+import {
+  ArrayNotEmpty,
+  IsInt,
+  IsNotEmptyObject,
+  ValidateNested,
+} from 'class-validator';
 
-export interface CreateOrderDto {
+export class CreateOrderDto {
+  @IsInt()
   userId: number;
+
+  @IsInt()
   restaurantId: number;
-  paymentMethod: PaymentMethod;
+
+  @IsInt()
   orderTime: number;
-  orderStatus: OrderStatus;
+
+  @ArrayNotEmpty()
+  @Type(() => CreateOrderItemDto)
+  @ValidateNested()
   orderItems: CreateOrderItemDto[];
+
+  @IsNotEmptyObject()
+  @Type(() => CreateDeliveryDetailsDto)
+  @ValidateNested()
   deliveryDetails: CreateDeliveryDetailsDto;
 }
