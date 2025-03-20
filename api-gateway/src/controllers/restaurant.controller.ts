@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Post,
   Put,
@@ -18,10 +19,14 @@ import { RestaurantService } from 'src/services/restaurant.service';
 
 @Controller()
 export class RestaurantController {
-  constructor(private readonly restaurantService: RestaurantService) {}
+  constructor(
+    private logger = new Logger('Restaurant Controller'),
+    private readonly restaurantService: RestaurantService,
+  ) {}
 
   @Get('/restaurants')
   async getRestaurants(@Query('city') city: string) {
+    this.logger.log(`Fetching restaurants in city ${city}`);
     return await this.restaurantService.getRestaurants(city);
   }
 
@@ -30,11 +35,15 @@ export class RestaurantController {
     @Query('city') city: string,
     @Query('name') name: string,
   ) {
+    this.logger.log(
+      `Fetching search for restaurants in city ${city} by name ${name}`,
+    );
     return await this.restaurantService.searchRestaurants(city, name);
   }
 
   @Get('/restaurants/:id')
   async getRestaurantById(@Param('id') { id }: FindOneParams) {
+    this.logger.log(`Fetching restaurant with id ${id}`);
     return await this.restaurantService.getRestaurantById(id);
   }
 
@@ -42,6 +51,7 @@ export class RestaurantController {
   async getMenuItemInRestaurantById(
     @Param() { id, menuId }: FindRestaurantMenuParams,
   ) {
+    this.logger.log(`Fetching menu item with id ${id}`);
     return await this.restaurantService.getMenuItemInRestaurantById(id, menuId);
   }
 
@@ -50,6 +60,9 @@ export class RestaurantController {
     @Param('id') { id }: FindOneParams,
     @Query('name') name: string,
   ) {
+    this.logger.log(
+      `Fetching search for menu items in restaurant with id ${id} by name ${name}`,
+    );
     return await this.restaurantService.searchMenuItemsInRestaurantByName(
       id,
       name,
@@ -58,6 +71,7 @@ export class RestaurantController {
 
   @Post('/restaurant/create')
   async createRestaurant(@Body() newRestaurant: CreateRestaurantDto) {
+    this.logger.log(`Creating new restaurant`);
     return await this.restaurantService.createRestaurant(newRestaurant);
   }
 
@@ -66,6 +80,7 @@ export class RestaurantController {
     @Param('id') { id }: FindOneParams,
     @Body() newMenuItem: CreateMenuItemDto,
   ) {
+    this.logger.log(`Creating new menu item`);
     return await this.restaurantService.createMenuItem(id, newMenuItem);
   }
 
@@ -74,6 +89,7 @@ export class RestaurantController {
     @Param('id') { id }: FindOneParams,
     @Body() updateRestaurant: UpdateRestaurantDto,
   ) {
+    this.logger.log(`Updating restaurant with id ${id}`);
     return await this.restaurantService.updateRestaurant(id, updateRestaurant);
   }
 
@@ -82,6 +98,7 @@ export class RestaurantController {
     @Param() { id, menuId }: FindRestaurantMenuParams,
     @Body() updateMenuItem: UpdateMenuItemDto,
   ) {
+    this.logger.log(`Updating menu item with id ${id}`);
     return await this.restaurantService.updateMenuItem(
       id,
       menuId,
@@ -91,11 +108,13 @@ export class RestaurantController {
 
   @Delete('/restaurant/:id')
   async deleteRestaurant(@Param('id') { id }: FindOneParams) {
+    this.logger.log(`Deleting restaurant with id ${id}`);
     return await this.restaurantService.deleteRestaurant(id);
   }
 
   @Delete('/restaurant/:id/menu/:menu_id')
   async deleteMenuItem(@Param() { id, menuId }: FindRestaurantMenuParams) {
+    this.logger.log(`Deleting menu item with id ${id}`);
     return await this.restaurantService.deleteMenuItem(id, menuId);
   }
 }
