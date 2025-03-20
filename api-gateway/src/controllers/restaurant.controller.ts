@@ -19,6 +19,8 @@ import { CreateRestaurantDto } from 'src/common/dto/restaurant/create_restaurant
 import { UpdateMenuItemDto } from 'src/common/dto/restaurant/update_menu_item.dto';
 import { UpdateRestaurantDto } from 'src/common/dto/restaurant/update_restaurant.dto';
 import { firstValueFrom } from 'rxjs';
+import { FindOneParams } from 'src/common/dto/find_one_params';
+import { FindRestaurantMenuParams } from 'src/common/dto/find_restaurant_menu_params';
 
 @Controller()
 export class RestaurantController {
@@ -74,7 +76,7 @@ export class RestaurantController {
   }
 
   @Get('/restaurants/:id')
-  async getRestaurantById(@Param('id') id: number) {
+  async getRestaurantById(@Param('id') { id }: FindOneParams) {
     try {
       const restaurant: Restaurant = await firstValueFrom(
         this.restaurantServiceClient.send('findRestaurantById', id),
@@ -96,14 +98,13 @@ export class RestaurantController {
 
   @Get('/restaurants/:id/menu/:menu_id')
   async getMenuItemInRestaurantById(
-    @Param('id') id: number,
-    @Param('menu_id') menu_id: number,
+    @Param() { id, menuId }: FindRestaurantMenuParams,
   ) {
     try {
       const menuItem: MenuItem = await firstValueFrom(
         this.restaurantServiceClient.send('findMenuItemInRestaurantById', [
           id,
-          menu_id,
+          menuId,
         ]),
       );
       if (!menuItem) {
@@ -123,7 +124,7 @@ export class RestaurantController {
 
   @Get('restaurant/:id/menu')
   async searchMenuItemsInRestaurantByName(
-    @Param('id') id: number,
+    @Param('id') { id }: FindOneParams,
     @Query('name') name: string,
   ) {
     try {
@@ -170,7 +171,7 @@ export class RestaurantController {
 
   @Post('/restaurant/:id/menu/')
   async createMenuItem(
-    @Param('id') id: number,
+    @Param('id') { id }: FindOneParams,
     @Body() newMenuItem: CreateMenuItemDto,
   ) {
     try {
@@ -196,7 +197,7 @@ export class RestaurantController {
 
   @Put('/restaurant/:id')
   async updateRestaurant(
-    @Param('id') id: number,
+    @Param('id') { id }: FindOneParams,
     @Body() updateRestaurant: UpdateRestaurantDto,
   ) {
     try {
@@ -222,15 +223,14 @@ export class RestaurantController {
 
   @Put('/restaurant/:id/menu/:menu_id')
   async updateMenuItem(
-    @Param('id') id: number,
-    @Param('menu_id') menu_id: number,
+    @Param() { id, menuId }: FindRestaurantMenuParams,
     @Body() updateMenuItem: UpdateMenuItemDto,
   ) {
     try {
       const menuItem: MenuItem = await firstValueFrom(
         this.restaurantServiceClient.send('updateMenuItem', [
           id,
-          menu_id,
+          menuId,
           updateMenuItem,
         ]),
       );
@@ -249,7 +249,7 @@ export class RestaurantController {
   }
 
   @Delete('/restaurant/:id')
-  async deleteRestaurant(@Param('id') id: number) {
+  async deleteRestaurant(@Param('id') { id }: FindOneParams) {
     try {
       const restaurant: Restaurant = await firstValueFrom(
         this.restaurantServiceClient.send('deleteRestaurant', id),
@@ -269,13 +269,10 @@ export class RestaurantController {
   }
 
   @Delete('/restaurant/:id/menu/:menu_id')
-  async deleteMenuItem(
-    @Param('id') id: number,
-    @Param('menu_id') menu_id: number,
-  ) {
+  async deleteMenuItem(@Param() { id, menuId }: FindRestaurantMenuParams) {
     try {
       const menuItem: MenuItem = await firstValueFrom(
-        this.restaurantServiceClient.send('deleteMenuItem', [id, menu_id]),
+        this.restaurantServiceClient.send('deleteMenuItem', [id, menuId]),
       );
       if (!menuItem)
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);

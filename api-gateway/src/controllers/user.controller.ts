@@ -50,10 +50,10 @@ export class UserController {
 
   // @UseGuards(AuthGuard) roles
   @Get('/users/:id')
-  async getUser(@Param() params: FindOneParams) {
+  async getUser(@Param('id') { id }: FindOneParams) {
     try {
       const user: User = await firstValueFrom(
-        this.userServiceClient.send('getUserProfile', params.id),
+        this.userServiceClient.send('getUserProfile', id),
       );
       if (!user) {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);

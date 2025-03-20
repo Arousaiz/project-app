@@ -17,6 +17,7 @@ import { CreateOrderDto } from 'src/common/dto/order/create_order.dto';
 import { UpdateOrderDto } from 'src/common/dto/order/update_order.dto';
 import { firstValueFrom } from 'rxjs';
 import { Order } from '../common/dto/entity_objects/order';
+import { FindOneParams } from 'src/common/dto/find_one_params';
 
 @Controller()
 export class OrderController {
@@ -45,7 +46,7 @@ export class OrderController {
   }
 
   @Get('restaurants/:id/orders/')
-  async getOrdersByRestaurantId(@Param('id') id: number) {
+  async getOrdersByRestaurantId(@Param('id') { id }: FindOneParams) {
     try {
       const orders: Order[] = await firstValueFrom(
         this.orderServiceClient.send('findOrdersByRestaurantId', id),
@@ -82,7 +83,7 @@ export class OrderController {
 
   //TODO check if order userId is the same as the logged in user
   @Get('profile/orders/:id')
-  async getOrderById(@Param('id') id: number) {
+  async getOrderById(@Param('id') { id }: FindOneParams) {
     try {
       const order: Order = await firstValueFrom(
         this.orderServiceClient.send('findOrderById', id),
@@ -100,7 +101,7 @@ export class OrderController {
 
   // admin only
   @Get('orders/:id')
-  async getOrderByIdForAdmin(@Param('id') id: number) {
+  async getOrderByIdForAdmin(@Param('id') { id }: FindOneParams) {
     try {
       const order: Order = await firstValueFrom(
         this.orderServiceClient.send('findOrderById', id),
@@ -144,7 +145,7 @@ export class OrderController {
 
   @Put('orders/:id')
   async updateOrder(
-    @Param('id') id: number,
+    @Param('id') { id }: FindOneParams,
     @Body() updateOrder: UpdateOrderDto,
   ) {
     try {
@@ -163,7 +164,7 @@ export class OrderController {
   }
 
   @Put('orders/:id/cancel')
-  async cancelOrder(@Param('id') id: number) {
+  async cancelOrder(@Param('id') { id }: FindOneParams) {
     try {
       const order: Order = await firstValueFrom(
         this.orderServiceClient.send('cancelOrder', id),
