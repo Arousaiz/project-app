@@ -22,7 +22,6 @@ export class UserService {
       if (!users) {
         throw new HttpException('Users not found', HttpStatus.NOT_FOUND);
       }
-      this.logger.log('Users fetched successfully');
       return {
         message: 'Users fetched successfully',
         data: users,
@@ -44,7 +43,6 @@ export class UserService {
       if (!user) {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
       }
-      this.logger.log(`User with id ${id} fetched successfully`);
       return { message: 'User fetched successfully', data: user };
     } catch (error) {
       this.logger.error(`failed to fetch user with id: ${id}`, error.stack);
@@ -63,9 +61,6 @@ export class UserService {
       if (!userResponse) {
         throw new HttpException('User profile not found', HttpStatus.NOT_FOUND);
       }
-      this.logger.log(
-        `Profile for user with id ${userId} fetched successfully`,
-      );
       return {
         message: 'User profile fetched successfully',
         data: {
@@ -89,7 +84,6 @@ export class UserService {
       if (!userResponse) {
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
       }
-      this.logger.log(`User with id ${userId} updated successfully`);
       return { message: 'User updated successfully', data: userResponse };
     } catch (error) {
       this.logger.error(
@@ -111,9 +105,6 @@ export class UserService {
       if (!userResponse) {
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
       }
-      this.logger.log(
-        `Credentials of a user with id ${userId} updated successfully`,
-      );
       return {
         message: 'User credentials updated successfully',
         data: userResponse,
@@ -138,7 +129,6 @@ export class UserService {
       if (!userResponse) {
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
       }
-      this.logger.log(`User with id ${userId} deleted successfully`);
       return { message: 'User deleted successfully', data: userResponse };
     } catch (error) {
       this.logger.error(

@@ -26,7 +26,6 @@ export class RestaurantService {
       if (!restaurants) {
         throw new HttpException('Restaurants not found', HttpStatus.NOT_FOUND);
       }
-      this.logger.log(`Restaurants in city ${city} fetched successfully`);
       return {
         message: 'Restaurants fetched successfully',
         data: restaurants,
@@ -51,9 +50,6 @@ export class RestaurantService {
       if (!restaurants) {
         throw new HttpException('Restaurants not found', HttpStatus.NOT_FOUND);
       }
-      this.logger.log(
-        `Search for restaurants in city ${city} by name ${name} fetched successfully`,
-      );
       return {
         message: 'Restaurants fetched successfully',
         data: restaurants,
@@ -78,7 +74,6 @@ export class RestaurantService {
       if (!restaurant) {
         throw new HttpException('Restaurant not found', HttpStatus.NOT_FOUND);
       }
-      this.logger.log(`Restaurant with id ${id} fetched successfully`);
       return {
         message: 'Restaurant fetched successfully',
         data: restaurant,
@@ -106,7 +101,6 @@ export class RestaurantService {
       if (!menuItem) {
         throw new HttpException('MenuItem not found', HttpStatus.NOT_FOUND);
       }
-      this.logger.log(`MenuItem with id ${id} fetched successfully`);
       return {
         message: 'MenuItem fetched successfully',
         data: menuItem,
@@ -131,9 +125,6 @@ export class RestaurantService {
       if (!menuItems) {
         throw new HttpException('MenuItems not found', HttpStatus.NOT_FOUND);
       }
-      this.logger.log(
-        `Search for menu items in restaurant with id ${id} by name ${name} fetched successfully`,
-      );
       return {
         message: 'MenuItems fetched successfully',
         data: menuItems,
@@ -156,9 +147,6 @@ export class RestaurantService {
       );
       if (!restaurant)
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
-      this.logger.log(
-        `New restaurant with name ${restaurant.name} created successfully`,
-      );
       return {
         message: 'Restaurant created successfully',
         data: restaurant,
@@ -185,9 +173,6 @@ export class RestaurantService {
       );
       if (!menuItem)
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
-      this.logger.log(
-        `New MenuItem with name ${menuItem.name} created successfully`,
-      );
       return {
         message: 'new MenuItem created successfully',
         data: menuItem,
@@ -214,7 +199,6 @@ export class RestaurantService {
       );
       if (!restaurant)
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
-      this.logger.log(`Restaurant with id ${id} updated successfully`);
       return {
         message: 'Restaurant updated successfully',
         data: restaurant,
@@ -246,7 +230,6 @@ export class RestaurantService {
       );
       if (!menuItem)
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
-      this.logger.log(`MenuItem with id ${id} updated successfully`);
       return {
         message: 'MenuItem updated successfully',
         data: menuItem,
@@ -270,7 +253,6 @@ export class RestaurantService {
       );
       if (!restaurant)
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
-      this.logger.log(`Restaurant with id ${id} deleted successfully`);
       return {
         message: 'Restaurant deleted successfully',
         data: restaurant,
@@ -294,7 +276,6 @@ export class RestaurantService {
       );
       if (!menuItem)
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
-      this.logger.log(`MenuItem with id ${id} deleted successfully`);
       return {
         message: 'MenuItem deleted successfully',
         data: menuItem,

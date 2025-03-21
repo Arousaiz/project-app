@@ -23,7 +23,6 @@ export class OrderService {
       );
       if (!orders)
         throw new HttpException('Orders not found', HttpStatus.NOT_FOUND);
-      this.logger.log('Orders fetched successfully');
       return { message: 'Orders fetched successfully', data: orders };
     } catch (error) {
       this.logger.error('failed to fetch orders', error.stack);
@@ -41,9 +40,6 @@ export class OrderService {
       );
       if (!orders)
         throw new HttpException('Orders not found', HttpStatus.NOT_FOUND);
-      this.logger.log(
-        `Orders in restaurant with id ${id} fetched successfully`,
-      );
       return { message: 'Orders fetched successfully', data: orders };
     } catch (error) {
       this.logger.error(
@@ -64,7 +60,6 @@ export class OrderService {
       );
       if (!orders)
         throw new HttpException('Orders not found', HttpStatus.NOT_FOUND);
-      this.logger.log(`Orders of user with id ${userId} fetched successfully`);
       return { message: 'Orders fetched successfully', data: orders };
     } catch (error) {
       this.logger.error(
@@ -85,7 +80,6 @@ export class OrderService {
       );
       if (!order)
         throw new HttpException('Order not found', HttpStatus.NOT_FOUND);
-      this.logger.log(`User order with id ${id} fetched successfully`);
       return { message: 'Order fetched successfully', data: order };
     } catch (error) {
       this.logger.error(
@@ -106,7 +100,6 @@ export class OrderService {
       );
       if (!order)
         throw new HttpException('Order not found', HttpStatus.NOT_FOUND);
-      this.logger.log(`Order with id ${id} fetched successfully`);
       return { message: 'Order fetched successfully', data: order };
     } catch (error) {
       this.logger.error(`failed to fetch order with id: ${id}`, error.stack);
@@ -133,9 +126,6 @@ export class OrderService {
       );
       if (!order)
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
-      this.logger.log(
-        `Order for user with id ${newOrder.userId} created successfully`,
-      );
       return { message: 'Order created successfully', data: order };
     } catch (error) {
       this.logger.error(
@@ -156,7 +146,6 @@ export class OrderService {
       );
       if (!order)
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
-      this.logger.log(`Order with id ${id} updated successfully`);
       return { message: 'Order updated successfully', data: order };
     } catch (error) {
       this.logger.error(
@@ -177,7 +166,6 @@ export class OrderService {
       );
       if (!order)
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
-      this.logger.log(`Order with id ${id} canceled successfully`);
       return { message: 'Order canceled successfully', data: order };
     } catch (error) {
       this.logger.error(`failed to cancel order with id ${id}`, error.stack);

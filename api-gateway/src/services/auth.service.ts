@@ -34,7 +34,6 @@ export class AuthService {
       const token: string = await firstValueFrom(
         this.authServiceClient.send('createToken', data),
       );
-      this.logger.log(`User ${user.username} created successfully`);
       return {
         message: 'User created successfully',
         data: {
@@ -69,7 +68,6 @@ export class AuthService {
       const token: string = await firstValueFrom(
         this.authServiceClient.send('createToken', data),
       );
-      this.logger.log(`User ${user.username} logged in successfully`);
       return {
         message: 'User logged in successfully',
         data: {
