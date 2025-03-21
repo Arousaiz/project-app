@@ -9,16 +9,32 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { ApiProperty, ApiSchema } from '@nestjs/swagger';
 
+@ApiSchema({ name: 'UpdateOrderRequest' })
 export class UpdateOrderDto {
+  @ApiProperty({
+    required: false,
+    enum: PaymentMethod,
+    example: PaymentMethod.CASH,
+  })
   @IsOptional()
   @IsEnum(PaymentMethod)
   paymentMethod?: PaymentMethod;
 
+  @ApiProperty({
+    required: false,
+    enum: OrderStatus,
+    example: OrderStatus.ACCEPTED,
+  })
   @IsOptional()
   @IsEnum(OrderStatus)
   orderStatus?: OrderStatus;
 
+  @ApiProperty({
+    required: false,
+    type: () => UpdateDeliveryDetailsDto,
+  })
   @IsOptional()
   @Type(() => UpdateDeliveryDetailsDto)
   @ValidateNested()
