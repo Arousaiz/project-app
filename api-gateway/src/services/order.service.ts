@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { CreateOrderDto } from 'src/common/dto/order/create_order.dto';
@@ -9,6 +9,7 @@ import { Order } from '../common/dto/entity_objects/order';
 @Injectable()
 export class OrderService {
   constructor(
+    private logger = new Logger('Order Service'),
     @Inject('ORDER_SERVICE') private orderServiceClient: ClientProxy,
     @Inject('RESTAURANT_SERVICE') private restaurantServiceClient: ClientProxy,
     @Inject('USER_SERVICE') private userServiceClient: ClientProxy,
@@ -23,7 +24,8 @@ export class OrderService {
       if (!orders)
         throw new HttpException('Orders not found', HttpStatus.NOT_FOUND);
       return { message: 'Orders fetched successfully', data: orders };
-    } catch {
+    } catch (error) {
+      this.logger.error('failed to fetch orders', error.stack);
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -39,7 +41,11 @@ export class OrderService {
       if (!orders)
         throw new HttpException('Orders not found', HttpStatus.NOT_FOUND);
       return { message: 'Orders fetched successfully', data: orders };
-    } catch {
+    } catch (error) {
+      this.logger.error(
+        `failed to fetch orders in restaurant with id: ${id}`,
+        error.stack,
+      );
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -55,7 +61,11 @@ export class OrderService {
       if (!orders)
         throw new HttpException('Orders not found', HttpStatus.NOT_FOUND);
       return { message: 'Orders fetched successfully', data: orders };
-    } catch {
+    } catch (error) {
+      this.logger.error(
+        `failed to fetch orders of user with id: ${userId}`,
+        error.stack,
+      );
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -71,7 +81,11 @@ export class OrderService {
       if (!order)
         throw new HttpException('Order not found', HttpStatus.NOT_FOUND);
       return { message: 'Order fetched successfully', data: order };
-    } catch {
+    } catch (error) {
+      this.logger.error(
+        `failed to fetch user order with id: ${id}`,
+        error.stack,
+      );
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -87,7 +101,8 @@ export class OrderService {
       if (!order)
         throw new HttpException('Order not found', HttpStatus.NOT_FOUND);
       return { message: 'Order fetched successfully', data: order };
-    } catch {
+    } catch (error) {
+      this.logger.error(`failed to fetch order with id: ${id}`, error.stack);
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -112,7 +127,11 @@ export class OrderService {
       if (!order)
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
       return { message: 'Order created successfully', data: order };
-    } catch {
+    } catch (error) {
+      this.logger.error(
+        `failed to create order, order details: ${JSON.stringify(newOrder)}`,
+        error.stack,
+      );
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -128,7 +147,11 @@ export class OrderService {
       if (!order)
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
       return { message: 'Order updated successfully', data: order };
-    } catch {
+    } catch (error) {
+      this.logger.error(
+        `failed to update order with id: ${id}, updating fields: ${JSON.stringify(updateOrder)}`,
+        error.stack,
+      );
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -144,7 +167,8 @@ export class OrderService {
       if (!order)
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
       return { message: 'Order canceled successfully', data: order };
-    } catch {
+    } catch (error) {
+      this.logger.error(`failed to cancel order with id ${id}`, error.stack);
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,

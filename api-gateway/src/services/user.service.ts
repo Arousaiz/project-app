@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { User } from 'src/common/dto/entity_objects/user';
@@ -9,6 +9,7 @@ import { firstValueFrom } from 'rxjs';
 @Injectable()
 export class UserService {
   constructor(
+    private logger = new Logger('User Service'),
     @Inject('USER_SERVICE') private userServiceClient: ClientProxy,
     @Inject('AUTH_SERVICE') private authServiceClient: ClientProxy,
   ) {}
@@ -25,7 +26,8 @@ export class UserService {
         message: 'Users fetched successfully',
         data: users,
       };
-    } catch {
+    } catch (error) {
+      this.logger.error('failed to fetch users', error.stack);
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -42,7 +44,8 @@ export class UserService {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
       }
       return { message: 'User fetched successfully', data: user };
-    } catch {
+    } catch (error) {
+      this.logger.error(`failed to fetch user with id: ${id}`, error.stack);
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -64,7 +67,8 @@ export class UserService {
           userResponse,
         },
       };
-    } catch {
+    } catch (error) {
+      this.logger.error(`failed to fetch user profile`, error.stack);
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -81,7 +85,11 @@ export class UserService {
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
       }
       return { message: 'User updated successfully', data: userResponse };
-    } catch {
+    } catch (error) {
+      this.logger.error(
+        `failed to update user with id: ${userId}, updating fields: ${JSON.stringify(user)}`,
+        error.stack,
+      );
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -101,7 +109,11 @@ export class UserService {
         message: 'User credentials updated successfully',
         data: userResponse,
       };
-    } catch {
+    } catch (error) {
+      this.logger.error(
+        `failed to update credentials of a user with id: ${userId}`,
+        error.stack,
+      );
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -118,7 +130,11 @@ export class UserService {
         throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
       }
       return { message: 'User deleted successfully', data: userResponse };
-    } catch {
+    } catch (error) {
+      this.logger.error(
+        `failed to delete user with id: ${userId}`,
+        error.stack,
+      );
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,

@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import { User } from 'src/common/dto/entity_objects/user';
@@ -9,6 +15,7 @@ import { payloadDto } from '../common/dto/user/payload.dto';
 @Injectable()
 export class AuthService {
   constructor(
+    private logger = new Logger('Auth Service'),
     @Inject('AUTH_SERVICE') private authServiceClient: ClientProxy,
     @Inject('USER_SERVICE') private userServiceClient: ClientProxy,
   ) {}
@@ -34,7 +41,8 @@ export class AuthService {
           token: token,
         },
       };
-    } catch {
+    } catch (error) {
+      this.logger.error(`failed to create user ${user.username}`, error.stack);
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -67,7 +75,8 @@ export class AuthService {
           token: token,
         },
       };
-    } catch {
+    } catch (error) {
+      this.logger.error(`failed to login user ${user.username}`, error.stack);
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
