@@ -1,3 +1,4 @@
+import { ApiProperty, ApiSchema } from '@nestjs/swagger';
 import {
   IsDefined,
   IsOptional,
@@ -6,11 +7,20 @@ import {
   ValidateIf,
 } from 'class-validator';
 
+@ApiSchema({ name: 'UpdateUserCredentialsRequest' })
 export class UpdateUserCredentialsDto {
+  @ApiProperty({
+    required: false,
+    example: 'PapaSmurf',
+  })
   @IsOptional()
   @Length(6, 50)
   username?: string;
 
+  @ApiProperty({
+    required: false,
+    example: 'MoonLight!1',
+  })
   @IsOptional()
   @IsStrongPassword({
     minLength: 8,
